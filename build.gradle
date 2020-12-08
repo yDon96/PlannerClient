@@ -4,7 +4,7 @@ apply plugin: 'application'
 
     group = 'CAAY cyclic'
 
-mainClassName = 'CAAYcyclic.SystemAdiminClient.AppDelegate'
+mainClassName = 'CAAYcyclic.PlannerClient.AppDelegate'
 
 repositories {
     jcenter()
