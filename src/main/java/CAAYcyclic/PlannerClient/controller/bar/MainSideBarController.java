@@ -11,6 +11,7 @@ import CAAYcyclic.PlannerClient.view.panel.bar.MainSideBarPanel;
 import javax.swing.*;
 import java.awt.event.*;
 import CAAYcyclic.PlannerClient.controller.bar.IBarController;
+import CAAYcyclic.PlannerClient.controller.content.ActivitiesPanelController;
 import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
 import CAAYcyclic.PlannerClient.navigation.Segue;
 import java.util.logging.Logger;
@@ -28,7 +29,7 @@ public class MainSideBarController extends BarController {
     
     
     private JButton dashBtn;
-    private JButton procedureBtn;
+    private JButton activitiesBtn;
     private JButton userBtn;
 
 
@@ -43,11 +44,11 @@ public class MainSideBarController extends BarController {
         super.panelDidAppear();
         this.mainSideBarView = (MainSideBarPanel) getPanel();
         dashBtn = mainSideBarView.getDashBtn();
-        procedureBtn = mainSideBarView.getProcedureBtn();
-        userBtn = mainSideBarView.getUserBtn();
+        activitiesBtn = mainSideBarView.getActivitiesBtn();
+        userBtn = mainSideBarView.getMaintBtn();
         dashBtn.addMouseListener(dashBtnAction);
-        procedureBtn.addMouseListener(procedureBtnAction);
-        userBtn.addMouseListener(userBtnAction);
+        activitiesBtn.addMouseListener(activitiesBtnAction);
+        userBtn.addMouseListener(maintBtnAction);
     }
     
     
@@ -61,16 +62,17 @@ public class MainSideBarController extends BarController {
         }
     };
 
-    private MouseAdapter procedureBtnAction = new MouseAdapter() {
+    private MouseAdapter activitiesBtnAction = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "ProcedureButton selected.");
+            swichAction(activitiesBtn,ActivitiesPanelController.class);
 
         }
     };
 
-    private MouseAdapter userBtnAction = new MouseAdapter() {
+    private MouseAdapter maintBtnAction = new MouseAdapter() {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
