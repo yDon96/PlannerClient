@@ -21,9 +21,9 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="dashBtn" pref="151" max="32767" attributes="0"/>
-          <Component id="procedureBtn" max="32767" attributes="0"/>
-          <Component id="userBtn" alignment="1" max="32767" attributes="0"/>
+          <Component id="dashBtn" max="32767" attributes="0"/>
+          <Component id="activitiesBtn" max="32767" attributes="0"/>
+          <Component id="maintBtn" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -32,9 +32,9 @@
               <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
               <Component id="dashBtn" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="procedureBtn" min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="activitiesBtn" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="userBtn" min="-2" pref="34" max="-2" attributes="0"/>
+              <Component id="maintBtn" min="-2" pref="34" max="-2" attributes="0"/>
               <EmptySpace pref="99" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -73,13 +73,12 @@
         <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
           <Insets value="[0, 10, 0, 10]"/>
         </Property>
-        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dashBtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="procedureBtn">
+    <Component class="javax.swing.JButton" name="activitiesBtn">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="ApplicationColor.primaryColor.value" type="code"/>
@@ -90,7 +89,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Procedure"/>
+        <Property name="text" type="java.lang.String" value="Activities"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
             <CompoundBorder>
@@ -107,10 +106,9 @@
         </Property>
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="userBtn">
+    <Component class="javax.swing.JButton" name="maintBtn">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="ApplicationColor.primaryColor.value" type="code"/>
@@ -121,7 +119,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="User"/>
+        <Property name="text" type="java.lang.String" value="Maintainers Availability"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.CompoundBorderInfo">
             <CompoundBorder>
@@ -138,7 +136,6 @@
         </Property>
         <Property name="borderPainted" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
-        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
   </SubComponents>

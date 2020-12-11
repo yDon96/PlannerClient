@@ -31,12 +31,12 @@ public final class MainSideBarPanel extends JPanel {
         return dashBtn;
     }
 
-    public JButton getProcedureBtn() {
-        return procedureBtn;
+    public JButton getActivitiesBtn() {
+        return activitiesBtn;
     }
 
-    public JButton getUserBtn() {
-        return userBtn;
+    public JButton getMaintBtn() {
+        return maintBtn;
     }
     
     public void highlightButton(JButton button) {
@@ -65,8 +65,8 @@ public final class MainSideBarPanel extends JPanel {
     private void initComponents() {
 
         dashBtn = new javax.swing.JButton();
-        procedureBtn = new javax.swing.JButton();
-        userBtn = new javax.swing.JButton();
+        activitiesBtn = new javax.swing.JButton();
+        maintBtn = new javax.swing.JButton();
 
         setBackground(ApplicationColor.primaryColor.value);
 
@@ -79,38 +79,35 @@ public final class MainSideBarPanel extends JPanel {
         dashBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         dashBtn.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         dashBtn.setMargin(new java.awt.Insets(0, 10, 0, 10));
-        dashBtn.setOpaque(true);
         dashBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 dashBtnActionPerformed(evt);
             }
         });
 
-        procedureBtn.setBackground(ApplicationColor.primaryColor.value);
-        procedureBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        procedureBtn.setForeground(new java.awt.Color(255, 255, 255));
-        procedureBtn.setText("Procedure");
-        procedureBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0), javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 3, new java.awt.Color(242, 241, 241))));
-        procedureBtn.setBorderPainted(false);
-        procedureBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        procedureBtn.setOpaque(true);
+        activitiesBtn.setBackground(ApplicationColor.primaryColor.value);
+        activitiesBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        activitiesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        activitiesBtn.setText("Activities");
+        activitiesBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0), javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 3, new java.awt.Color(242, 241, 241))));
+        activitiesBtn.setBorderPainted(false);
+        activitiesBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        userBtn.setBackground(ApplicationColor.primaryColor.value);
-        userBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-        userBtn.setForeground(new java.awt.Color(255, 255, 255));
-        userBtn.setText("User");
-        userBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0), javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 3, new java.awt.Color(242, 241, 241))));
-        userBtn.setBorderPainted(false);
-        userBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        userBtn.setOpaque(true);
+        maintBtn.setBackground(ApplicationColor.primaryColor.value);
+        maintBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        maintBtn.setForeground(new java.awt.Color(255, 255, 255));
+        maintBtn.setText("Maintainers Availability");
+        maintBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0), javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 3, new java.awt.Color(242, 241, 241))));
+        maintBtn.setBorderPainted(false);
+        maintBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-            .addComponent(procedureBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(userBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(dashBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(activitiesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(maintBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,9 +115,9 @@ public final class MainSideBarPanel extends JPanel {
                 .addGap(87, 87, 87)
                 .addComponent(dashBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(procedureBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(activitiesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(userBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(maintBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(99, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -131,8 +128,8 @@ public final class MainSideBarPanel extends JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton activitiesBtn;
     private javax.swing.JButton dashBtn;
-    private javax.swing.JButton procedureBtn;
-    private javax.swing.JButton userBtn;
+    private javax.swing.JButton maintBtn;
     // End of variables declaration//GEN-END:variables
 }
