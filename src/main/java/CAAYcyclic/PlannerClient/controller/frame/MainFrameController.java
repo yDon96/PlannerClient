@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Youssef
  */
+@Deprecated
 public class MainFrameController {
 
     private final MainFrame mainFrame;

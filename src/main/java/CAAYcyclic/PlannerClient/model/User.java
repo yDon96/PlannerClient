@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CAAYcyclic.PlannerClient.api.model;
+package CAAYcyclic.PlannerClient.model;
 
+import CAAYcyclic.PlannerClient.model.Parcel;
+import CAAYcyclic.PlannerClient.model.Parcelable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author Youssef
  */
-@Deprecated
-public class User {
+public class User implements Parcelable{
     
     Integer user_id;
     String name;
@@ -58,6 +60,31 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public String getParcelableDescription() {
+        return "User";
+    }
+
+    @Override
+    public Parcel convertToParcel() {
+        Parcel parcel = new Parcel();
+        parcel.writeInteger(user_id);
+        parcel.writeString(name);
+        parcel.writeString(surname);
+        parcel.writeString(dob.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        parcel.writeString(role);
+        return parcel;
+    }
+
+    @Override
+    public void createFromParcel(Parcel parcel) {
+        this.user_id = parcel.readInteger();
+        this.name = parcel.readString();
+        this.surname = parcel.readString();
+        this.dob = LocalDate.parse((parcel.readString()),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        this.role = parcel.readString();
     }
     
     

@@ -11,6 +11,7 @@ import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
  *
  * @author Youssef
  */
+@Deprecated
 public class Segue {
     
     private ContentPanelController seguePanelController;

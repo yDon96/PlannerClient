@@ -5,7 +5,7 @@
  */
 package CAAYcyclic.PlannerClient.api.delegate;
 
-import CAAYcyclic.PlannerClient.api.model.User;
+import CAAYcyclic.PlannerClient.model.User;
 import java.util.List;
 
 /**

@@ -8,6 +8,7 @@ package CAAYcyclic.PlannerClient.view.frame;
 import java.awt.event.WindowAdapter;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -20,6 +21,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        this.barPanel.setLayout(new BoxLayout(barPanel, BoxLayout.Y_AXIS));
+        this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
     }
 
     /**
@@ -32,20 +35,50 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
+        barPanel = new javax.swing.JPanel();
+        contentPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(764, 586));
         setPreferredSize(new java.awt.Dimension(764, 586));
 
+        barPanel.setBackground(new java.awt.Color(255, 51, 153));
+
+        javax.swing.GroupLayout barPanelLayout = new javax.swing.GroupLayout(barPanel);
+        barPanel.setLayout(barPanelLayout);
+        barPanelLayout.setHorizontalGroup(
+            barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 144, Short.MAX_VALUE)
+        );
+        barPanelLayout.setVerticalGroup(
+            barPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout contentPanelLayout = new javax.swing.GroupLayout(contentPanel);
+        contentPanel.setLayout(contentPanelLayout);
+        contentPanelLayout.setHorizontalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 250, Short.MAX_VALUE)
+        );
+        contentPanelLayout.setVerticalGroup(
+            contentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addComponent(barPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(contentPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(barPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -65,6 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.addWindowListener(windowsAdapter);
     }
 
+    @Deprecated
     public void setFrameContent(JPanel content) {
         if(mainPanel.getComponentCount() > 0) {
             mainPanel.removeAll();
@@ -77,8 +111,41 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel.repaint();
         this.pack();
     }
+    
+    public void setBarPanel(JPanel navBar){
+        if(this.barPanel.getComponentCount() > 0){
+            this.barPanel.removeAll();
+        }
+        this.barPanel.add(navBar);
+        refresh(this.barPanel);
+        refresh();
+    }
+
+    public void setContentPanel(JPanel contentView){
+        if(this.contentPanel.getComponentCount() > 0){
+            this.contentPanel.removeAll();
+        }
+        this.contentPanel.add(contentView);
+        refresh(this.contentPanel);
+        refresh();
+     }
+    
+    public void refresh(){
+        this.revalidate();
+        this.repaint();
+    }
+    
+    public void refresh(JPanel panel){
+        SwingUtilities.invokeLater(new Runnable(){
+                  public void run() {
+                    panel.revalidate();
+                    panel.repaint();
+                  }});
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barPanel;
+    private javax.swing.JPanel contentPanel;
     private javax.swing.JPanel mainPanel;
     // End of variables declaration//GEN-END:variables
 }

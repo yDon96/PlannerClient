@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package CAAYcyclic.PlannerClient.api.model;
+package CAAYcyclic.PlannerClient.model;
+
+import CAAYcyclic.PlannerClient.model.Parcel;
+import CAAYcyclic.PlannerClient.model.Parcelable;
 
 /**
  *
  * @author Youssef
  */
-@Deprecated
-public class Procedure {
+public class Procedure implements Parcelable{
     
     Integer id;
     String title;
@@ -38,6 +40,27 @@ public class Procedure {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String getParcelableDescription() {
+        return "Procedure";
+    }
+
+    @Override
+    public Parcel convertToParcel() {
+        Parcel parcel = new Parcel();
+        parcel.writeInteger(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+        return parcel;
+    }
+
+    @Override
+    public void createFromParcel(Parcel parcel) {
+        this.id = parcel.readInteger();
+        this.title = parcel.readString();
+        this.description = parcel.readString();
     }
     
     

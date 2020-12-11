@@ -29,20 +29,23 @@ public abstract class ContentPanelController extends PanelController implements 
             LOG.log(java.util.logging.Level.WARNING, "Cannot instancete the panel.");
             return;
         }
-        panelWillAppear();
-        getContainerController().setContentPanel(this);
-        panelDidAppear();
+       initPanel();
     }
     
     @Override
     public void setContentPanel(JPanel panel){
         LOG.log(java.util.logging.Level.INFO, "Set panel: {0}", panel.getClass().getName());
-        setPanel(panel);
-        getContainerController().setContentPanel(this);
-        panelDidAppear();
+        initPanel();
     }
     
+    @Deprecated
+    private void initPanel(){
+        if(getContainerController() != null){
+            panelWillAppear();
+            getContainerController().setContentPanel(this);
+            panelDidAppear();
+        }
+        
+    }
     
-    
-
 }

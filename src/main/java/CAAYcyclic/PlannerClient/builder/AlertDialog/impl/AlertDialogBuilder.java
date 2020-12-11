@@ -5,7 +5,6 @@
  */
 package CAAYcyclic.PlannerClient.builder.AlertDialog.impl;
 
-import CAAYcyclic.PlannerClient.builder.AlertDialog.AlertBuilder;
 import CAAYcyclic.PlannerClient.controller.frame.MainFrameController;
 import CAAYcyclic.PlannerClient.navigation.NavigationController;
 import CAAYcyclic.PlannerClient.view.frame.AlertJDialog;
@@ -15,13 +14,15 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
+import CAAYcyclic.PlannerClient.builder.AlertDialog.IAlertBuilder;
 
 /**
  *
  * @author Youssef
  */
-public class AlertDialogBuilder implements AlertBuilder {
+public class AlertDialogBuilder implements IAlertBuilder {
     
     private String title;
     private String message;
@@ -30,9 +31,21 @@ public class AlertDialogBuilder implements AlertBuilder {
     private MouseAdapter positiveAction;
     private MouseAdapter negativeAction;
     private AlertJDialog dialog;
+    private JFrame parentFrame;
     
     private static final Logger LOG = Logger.getLogger(AlertDialogBuilder.class.getName());
 
+    public AlertDialogBuilder() {
+    }
+    
+    public AlertDialogBuilder(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
+    }
+
+    public void setParentFrame(JFrame parentFrame) {
+        this.parentFrame = parentFrame;
+    }
+    
     /**
      * Set title or will be display the default one.
      */
@@ -71,6 +84,7 @@ public class AlertDialogBuilder implements AlertBuilder {
         this.negativeAction = action;
     }
     
+    @Deprecated
     public void show() {
         MainFrameController mainFrameController = NavigationController.getInstance().getFrameController();
         if(mainFrameController == null){
@@ -83,6 +97,20 @@ public class AlertDialogBuilder implements AlertBuilder {
         dialog.setVisible(true);
         LOG.log(java.util.logging.Level.WARNING, "Showing Dialog.");
     }
+    
+    @Override
+    public void display() {
+        if(parentFrame == null){
+            LOG.log(java.util.logging.Level.SEVERE, "Dialog parent frame not exist.");
+            return;
+        }
+        dialog = new AlertJDialog(parentFrame, true);
+        dialog.setContentPane(getAlertPanel());
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setVisible(true);
+        LOG.log(java.util.logging.Level.WARNING, "Showing Dialog.");
+    }
+    
     
     public void dispose() {
         if(dialog == null){
