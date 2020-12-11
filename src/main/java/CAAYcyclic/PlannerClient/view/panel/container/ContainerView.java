@@ -12,6 +12,7 @@ import javax.swing.JPanel;
  *
  * @author Youssef
  */
+@Deprecated
 public class ContainerView extends JPanel {
 
     /**

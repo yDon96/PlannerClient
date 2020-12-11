@@ -6,6 +6,10 @@
 package CAAYcyclic.PlannerClient;
 
 import CAAYcyclic.PlannerClient.controller.frame.MainFrameController;
+import CAAYcyclic.PlannerClient.coordinator.ICoordinator;
+import CAAYcyclic.PlannerClient.coordinator.impl.AppCoordinator;
+import CAAYcyclic.PlannerClient.navigation.NavigationController;
+import CAAYcyclic.PlannerClient.view.frame.MainFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -16,6 +20,10 @@ import java.awt.event.WindowEvent;
 public class AppDelegate extends WindowAdapter {
 
     private static AppDelegate istance = null;
+    
+    private MainFrame mainFrame;
+    
+    private ICoordinator appCordinator;
 
     private AppDelegate() {}
 
@@ -27,9 +35,28 @@ public class AppDelegate extends WindowAdapter {
 
 
     public static void main(String[] args) {
+        newMain();
+    }
+    
+    @Deprecated
+    public static void oldMain() {
         MainFrameController mainFrameController = new MainFrameController();
         mainFrameController.setMainFrameWindowsAdapter(AppDelegate.getIstance());
     }
+    
+    public static void newMain() {
+        AppDelegate.getIstance().mainFrame = new MainFrame();
+        AppDelegate.getIstance().mainFrame.setWindowsAdapter(istance);
+        AppDelegate.getIstance().appCordinator = new AppCoordinator(new NavigationController(AppDelegate.getIstance().mainFrame));       
+        AppDelegate.getIstance().appCordinator.start();
+        AppDelegate.getIstance().mainFrame.setVisible(true);
+        AppDelegate.getIstance().mainFrame.pack();
+    }
+    
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
+
 
     /**
      * Invoked when a window has been opened.

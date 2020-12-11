@@ -5,7 +5,7 @@
  */
 package CAAYcyclic.PlannerClient.api.delegate;
 
-import CAAYcyclic.PlannerClient.api.model.Procedure;
+import CAAYcyclic.PlannerClient.model.Procedure;
 import java.util.List;
 
 /**

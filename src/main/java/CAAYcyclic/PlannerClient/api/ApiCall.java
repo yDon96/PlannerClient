@@ -5,8 +5,8 @@
  */
 package CAAYcyclic.PlannerClient.api;
 
-import CAAYcyclic.PlannerClient.api.model.Procedure;
-import CAAYcyclic.PlannerClient.api.model.User;
+import CAAYcyclic.PlannerClient.model.Procedure;
+import CAAYcyclic.PlannerClient.model.User;
 import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

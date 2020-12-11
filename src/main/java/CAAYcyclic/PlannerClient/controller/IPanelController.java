@@ -5,6 +5,8 @@
  */
 package CAAYcyclic.PlannerClient.controller;
 
+import CAAYcyclic.PlannerClient.coordinator.IAppCoordinator;
+import CAAYcyclic.PlannerClient.model.Parcel;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
 
@@ -55,4 +57,8 @@ public interface IPanelController {
      *  Set lockNavigation to false.
      */
     public void unlockNavigation();
+    
+    public void setCoordinator(IAppCoordinator coordinator);
+
+    public void setParcel(String id,Parcel parcel);
 }

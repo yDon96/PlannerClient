@@ -6,12 +6,13 @@
 package CAAYcyclic.PlannerClient.builder.AlertDialog;
 
 import java.awt.event.MouseAdapter;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Youssef
  */
-public interface AlertBuilder {
+public interface IAlertBuilder {
     
      /**
      * Set Title to display in Alert Panel.
@@ -38,4 +39,8 @@ public interface AlertBuilder {
      * @param action Action to perform.
      */
     void setNegativeButton(String value,MouseAdapter action);
+    
+    public void display();
+    
+    public void setParentFrame(JFrame parentFrame);
 }

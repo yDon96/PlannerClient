@@ -6,9 +6,9 @@
 package CAAYcyclic.PlannerClient.api;
 
 import CAAYcyclic.PlannerClient.api.delegate.ApiDelegate;
-import CAAYcyclic.PlannerClient.api.model.Procedure;
+import CAAYcyclic.PlannerClient.model.Procedure;
 import CAAYcyclic.PlannerClient.api.model.ServerSettings;
-import CAAYcyclic.PlannerClient.api.model.User;
+import CAAYcyclic.PlannerClient.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.util.List;

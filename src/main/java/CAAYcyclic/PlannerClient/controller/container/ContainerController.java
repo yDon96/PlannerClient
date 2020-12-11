@@ -16,6 +16,7 @@ import CAAYcyclic.PlannerClient.factory.container.IContainerViewAbstractFactory;
  *
  * @author Youssef
  */
+@Deprecated
 public class ContainerController {
 
     private ContainerView containerView;
