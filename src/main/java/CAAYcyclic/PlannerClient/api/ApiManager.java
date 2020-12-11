@@ -6,6 +6,7 @@
 package CAAYcyclic.PlannerClient.api;
 
 import CAAYcyclic.PlannerClient.api.delegate.ApiDelegate;
+import CAAYcyclic.PlannerClient.api.model.Activity;
 import CAAYcyclic.PlannerClient.api.model.Procedure;
 import CAAYcyclic.PlannerClient.api.model.ServerSettings;
 import CAAYcyclic.PlannerClient.api.model.User;
@@ -106,6 +107,32 @@ public class ApiManager {
         call.enqueue(getProceduresCallback);
     }
     
+    
+     public void createActivity(Activity activity,ApiDelegate apiDelegate){
+        LOG.log(java.util.logging.Level.CONFIG, "Post activity: {0}.", activity.getDescription());
+        this.apiDelegate = apiDelegate;
+        Call<ResponseBody> call = apiCall.postActivity(activity);
+  
+        call.enqueue(postCallback);
+    }
+     
+    public void updateActivity(Activity activity,ApiDelegate apiDelegate){
+        LOG.log(java.util.logging.Level.CONFIG, "Put activity: {0}.", activity.getDescription());
+        this.apiDelegate = apiDelegate;
+        Call<ResponseBody> call = apiCall.putActivity(activity);
+  
+        call.enqueue(putCallback);
+        
+    }
+    
+    public void getActivities (ApiDelegate apiDelegate){
+        LOG.log(java.util.logging.Level.CONFIG, "Get all activities.");
+        this.apiDelegate = apiDelegate;
+        Call<List<Activity>> call = apiCall.getAllActivity();
+        call.enqueue(getActivitiesCallback);
+        
+    }
+    
     private Callback<ResponseBody> postCallback = new Callback<ResponseBody>(){
         @Override
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
@@ -124,6 +151,28 @@ public class ApiManager {
         @Override
         public void onFailure(Call<ResponseBody> call, Throwable t){
             LOG.log(java.util.logging.Level.SEVERE, "Post response is not successful, message: {0}.", t.getMessage());
+            apiDelegate.onFailure(t.getMessage());
+        };
+    };
+    
+     private Callback<ResponseBody> putCallback = new Callback<ResponseBody>(){
+        @Override
+        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
+            if (response.isSuccessful()) {
+                LOG.log(java.util.logging.Level.CONFIG, "Put response is successful.");
+                ResponseBody body = response.body();
+                if(response != null){
+                    apiDelegate.onCreateSuccess();
+                }
+            } else {
+                LOG.log(java.util.logging.Level.SEVERE, "Put response is not successful.");
+                apiDelegate.onFailure("Update response is not successful.");
+            }
+        };
+
+        @Override
+        public void onFailure(Call<ResponseBody> call, Throwable t){
+            LOG.log(java.util.logging.Level.SEVERE, "Put response is not successful, message: {0}.", t.getMessage());
             apiDelegate.onFailure(t.getMessage());
         };
     };
@@ -215,6 +264,29 @@ public class ApiManager {
         @Override
         public void onFailure(Call<List<Procedure>> call, Throwable t){
             LOG.log(java.util.logging.Level.SEVERE, "Get procedures response is not successful, message: {0}.", t.getMessage());
+            apiDelegate.onFailure(t.getMessage());
+        };
+    };
+    
+    private Callback<List<Activity>> getActivitiesCallback = new Callback<List<Activity>>(){
+        @Override
+        public void onResponse(Call<List<Activity>> call, Response<List<Activity>> response){
+            if (response.isSuccessful()) {
+                LOG.log(java.util.logging.Level.CONFIG, "Get activities response is successful.");
+                List<Activity> activities = response.body();
+                LOG.log(java.util.logging.Level.CONFIG, "Get {0} activities.", String.valueOf(activities.size()));
+                if(activities != null){
+                    apiDelegate.onGetAllSuccess(activities);
+                }
+            } else {
+                LOG.log(java.util.logging.Level.SEVERE, "Get activities response is not successful.");
+                apiDelegate.onFailure("Could not get activities.");
+            }
+        };
+
+        @Override
+        public void onFailure(Call<List<Activity>> call, Throwable t){
+            LOG.log(java.util.logging.Level.SEVERE, "Get activities response is not successful, message: {0}.", t.getMessage());
             apiDelegate.onFailure(t.getMessage());
         };
     };

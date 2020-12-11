@@ -5,6 +5,7 @@
  */
 package CAAYcyclic.PlannerClient.api;
 
+import CAAYcyclic.PlannerClient.api.model.Activity;
 import CAAYcyclic.PlannerClient.api.model.Procedure;
 import CAAYcyclic.PlannerClient.api.model.User;
 import java.util.List;
@@ -35,5 +36,20 @@ public interface ApiCall {
     
     @POST("/user")
     public Call<ResponseBody> postUser(@Body User user);
+    
+    @GET("/activity")
+    public Call<List<Activity>> getActivity(@Query("id") String id);
+    
+    @GET("/activities")
+    public Call<List<Activity>> getAllActivity();
+    
+    @POST("/activity")
+    public Call<ResponseBody> postActivity(@Body Activity activity);
+    
+    @PUT("/activity")
+    public Call<ResponseBody> putActivity(@Body Activity activity);
+    
+    
+    
     
 }
