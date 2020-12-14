@@ -16,6 +16,8 @@ public class Parcel {
     private ArrayList<String> stringList;
     private ArrayList<Integer> integerList;
     private ArrayList<String[]> stringArrayList;
+    private ArrayList<Boolean> booleanList;
+    private ArrayList<Parcel> procedureArrayList;
     
     public void writeString(String string){
         if(stringList == null){
@@ -31,11 +33,25 @@ public class Parcel {
         integerList.add(integer);
     }
     
-    public void writeStringArray(String[] integer){
+    public void writeBoolean(Boolean bool){
+        if(booleanList == null){
+            booleanList = new ArrayList<Boolean>();
+        }
+        booleanList.add(bool);
+    }
+    
+    public void writeStringArray(String[] list){
         if(stringArrayList == null){
             stringArrayList = new ArrayList<String[]>();
         }
-        stringArrayList.add(integer);
+        stringArrayList.add(list);
+    }
+    
+     public void writeProcArray(ArrayList<Parcel> list){
+        if(procedureArrayList == null){
+            procedureArrayList = new ArrayList<Parcel>();
+        }
+        procedureArrayList.addAll(list);
     }
     
     public String readString(){
@@ -46,7 +62,16 @@ public class Parcel {
         return integerList.remove(0);
     }
     
+    public Boolean readBoolean(){
+        return booleanList.remove(0);
+    }
+    
     public String[] readStringArray(){
         return stringArrayList.remove(0);
+    }
+    
+    public ArrayList readProcList(){
+        return procedureArrayList;
+        
     }
 }

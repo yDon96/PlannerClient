@@ -36,12 +36,11 @@ public class MainSideBarController extends BarController {
     public MainSideBarController() {
         super();
         setBarPanel(MainSideBarPanel.class);
+         initComponet();
     }
     
-
-    @Override
-    public void panelDidAppear() {
-        super.panelDidAppear();
+   
+    public void initComponet(){
         this.mainSideBarView = (MainSideBarPanel) getPanel();
         dashBtn = mainSideBarView.getDashBtn();
         activitiesBtn = mainSideBarView.getActivitiesBtn();
@@ -49,6 +48,14 @@ public class MainSideBarController extends BarController {
         dashBtn.addMouseListener(dashBtnAction);
         activitiesBtn.addMouseListener(activitiesBtnAction);
         userBtn.addMouseListener(maintBtnAction);
+        
+    }
+    
+
+    @Override
+    public void panelDidAppear() {
+        super.panelDidAppear();
+        
     }
     
     
@@ -58,7 +65,8 @@ public class MainSideBarController extends BarController {
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "DashButton selected.");
-            swichAction(dashBtn,DashBoardPanelController.class);
+            swichAction(dashBtn);
+            getCoordinator().switchPanelToDash();
         }
     };
 
@@ -66,8 +74,9 @@ public class MainSideBarController extends BarController {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
-            LOG.log(java.util.logging.Level.INFO, "ProcedureButton selected.");
-            swichAction(activitiesBtn,ActivitiesPanelController.class);
+            LOG.log(java.util.logging.Level.INFO, "ActivityButton selected.");
+            swichAction(activitiesBtn);
+               getCoordinator().switchPanelToActivitiesPanel();
 
         }
     };
@@ -76,14 +85,14 @@ public class MainSideBarController extends BarController {
         @Override
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
-            LOG.log(java.util.logging.Level.INFO, "UserButton selected.");
+            LOG.log(java.util.logging.Level.INFO, "MaintainerButton selected.");
         }
     };
     
-    private void swichAction(JButton buttonToHighlight,Class<? extends ContentPanelController> panelClass) {
-        if(!isLockNavigation()){
+       
+     private void swichAction(JButton buttonToHighlight) {
+        if (!isLockNavigation()) {
             mainSideBarView.highlightButton(buttonToHighlight);
-            startPanel(panelClass);
         } else {
             LOG.log(java.util.logging.Level.WARNING, "Cannot swich panel, navigation is locked.");
         }

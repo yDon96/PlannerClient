@@ -27,17 +27,9 @@ public abstract class BarController extends PanelController implements IBarContr
             LOG.log(java.util.logging.Level.WARNING, "Cannot instancete the panel.");
             return;
         }
-        initPanel();
+      
     }
     
     
-    @Deprecated
-    private void initPanel(){
-         if(getContainerController() != null){
-            panelWillAppear();
-            getContainerController().setBarPanel(this);
-            panelDidAppear();
-        }
-    }
-    
+       
 }

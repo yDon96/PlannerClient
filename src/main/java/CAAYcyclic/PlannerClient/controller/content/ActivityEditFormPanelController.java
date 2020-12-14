@@ -7,20 +7,26 @@ package CAAYcyclic.PlannerClient.controller.content;
 
 import CAAYcyclic.PlannerClient.api.ApiManager;
 import CAAYcyclic.PlannerClient.api.delegate.ApiActivityDelegate;
-import CAAYcyclic.PlannerClient.api.model.Activity;
+import CAAYcyclic.PlannerClient.model.Activity;
 import CAAYcyclic.PlannerClient.builder.AlertDialog.impl.AlertDialogBuilder;
-import CAAYcyclic.PlannerClient.navigation.NavigationController;
+import CAAYcyclic.PlannerClient.model.Parcel;
+import CAAYcyclic.PlannerClient.model.Procedure;
+import CAAYcyclic.PlannerClient.model.ProceduresList;
 import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.component.RoundedJTextArea;
 import CAAYcyclic.PlannerClient.view.panel.component.ToggleSwitch;
 import CAAYcyclic.PlannerClient.view.panel.content.ActivityFormPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
 
 /**
@@ -37,30 +43,80 @@ public class ActivityEditFormPanelController extends ContentPanelController{
       JLabel ETAValueLabel;	    
       JLabel  WeekValueLabel;	
       JTextField idMaintField;	
-      JTextField idProcField;	
       JButton saveButton;
+      JComboBox procComboBox;
+      
+      
       Activity activityToEdit;
+      ProceduresList proceduresParcel;
+      ArrayList<Procedure> procedures;
+      
       
       
       
       public ActivityEditFormPanelController() {
         super();
         setContentPanel(ActivityFormPanel.class);
+         initComponent();
     }
 
     public ActivityFormPanel getActivityForm() {
         return activityForm;
     }
       
+    @Override
+    public void panelWillAppear() {
+        super.panelWillAppear();
+        
+        if(getParcels() != null){
+        
+            activityToEdit = new Activity();
+            proceduresParcel = new ProceduresList();
+            
+            activityToEdit.createFromParcel(getParcels()
+                    .get(activityToEdit.getParcelableDescription()));
+            
+            proceduresParcel.createFromParcel(getParcels()
+                    .get(proceduresParcel.getParcelableDescription()));
+                       
+            
+            fillPanel();
+        }
+        else{
+             procComboBox.setEnabled(false);
+         
+         }
     
+    }
      
     public void fillPanel() {
         setDescriptionTitle(activityToEdit.getDescription());
         setETAValue(activityToEdit.getEstimatedTime());
         setWeekValue(activityToEdit.getWeek());
         setIDMaintValue(activityToEdit.getMaintainerId());
-        setIDProcValue(activityToEdit.getProcedureId());
         setToggleButtonInter(activityToEdit.isInterruptable());
+        
+      
+         DefaultComboBoxModel model = (DefaultComboBoxModel) procComboBox.getModel();
+         Iterator<Parcel> it = proceduresParcel.getList().iterator();
+         
+         while (it.hasNext()) {
+                     Parcel procPars = it.next(); 
+                     Procedure proc = new Procedure();
+                     proc.createFromParcel(procPars);
+                     
+                     procedures.add(proc);
+                     
+                     model.addElement(proc.getId()+" - "+proc.getTitle());
+                     if(Objects.equals(proc.getId(), activityToEdit.getProcedureId())){
+                        model.setSelectedItem(proc.getId()+" - "+proc.getTitle());
+                       // procComboBox.setSelectedItem(proc.getDescription());
+                     }
+                     
+         }
+         
+      //    procComboBox.setSelectedItem();
+                
     }
 
     public void setActivityToEdit(Activity activityToEdit) {
@@ -72,7 +128,7 @@ public class ActivityEditFormPanelController extends ContentPanelController{
      @Override
     public void panelDidAppear() {
         super.panelDidAppear();
-        initComponent();
+       
     }
     
     private void initComponent() {
@@ -83,9 +139,12 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         interrToggleBtn = activityForm.getInterrToggleBtn();
         ETAValueLabel = activityForm.getETAValueLabel();	    
         WeekValueLabel = activityForm.getWeekValueLabel();	
-        idMaintField = activityForm.getIdMaintField();
-        idProcField = activityForm.getIdProcField();	
+        idMaintField = activityForm.getIdMaintField();	
         saveButton = activityForm.getSaveButton();
+        procComboBox = activityForm.getProcComboBox();
+        procComboBox.addItem("None");
+        
+        procedures = new ArrayList<Procedure>();
         
         
         setButtonAction();
@@ -113,20 +172,19 @@ public class ActivityEditFormPanelController extends ContentPanelController{
             return null;
         }
         
-        if(idProcField.getText().isBlank() || !idProcField.getText().matches("-?[0-9]+")){
-            showError("Wrong Procedure Id");
-            return null;
-        }
         
         activityToEdit.setDescription(descriptionTextArea.getText());
         activityToEdit.setInterruptable(interrToggleBtn.isActivated());
         activityToEdit.setWeek(Integer.parseInt(WeekValueLabel.getText()));
         activityToEdit.setEstimatedTime(Integer.parseInt(ETAValueLabel.getText()));      
         activityToEdit.setMaintainerId(Integer.parseInt(idMaintField.getText())); 
-        activityToEdit.setProcedureId(Integer.parseInt(idProcField.getText())); 
-        
-        
-        
+
+          if(procComboBox.getSelectedIndex()!=0) {
+              activityToEdit.setProcedureId((procedures.get(procComboBox.getSelectedIndex()-1)
+                      .getId()));
+          } else {
+          }
+               
         return activityToEdit;
     }
     
@@ -134,13 +192,15 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         Activity activity = generateActivity();
         if(activity != null){
             activityForm.setSavingText();
-            NavigationController.getInstance().lockNavigation();
             ApiManager.getIstance().createActivity(activity, apiDelegate);
+            // Da inserire quando la PUT sarà pronta
+        //    ApiManager.getIstance().updateActivity(activity, apiDelegate);
+        
         }
     }
         
         private void endSavingActivity() {
-        NavigationController.getInstance().unlockNavigation();
+      //  NavigationController.getInstance().unlockNavigation();
         activityForm.setSaveText();
     }
         
@@ -165,7 +225,7 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         public void onCreateSuccess() {
             endSavingActivity();
             showConfirmationMessage("Activity successfully added");
-            popBackView();
+            getCoordinator().popBack();
         }
     };
      
@@ -174,7 +234,7 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         alertBuilder.setTitle("Error");
         alertBuilder.setMessage(message);
         alertBuilder.setDefaultPositiveAction();
-        alertBuilder.show();
+        getCoordinator().showAlert(alertBuilder);
     }
      
      private void showConfirmationMessage(String message){
@@ -182,7 +242,8 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         alertBuilder.setTitle("Confirmation Message");
         alertBuilder.setMessage(message);
         alertBuilder.setDefaultPositiveAction();
-        alertBuilder.show();
+        getCoordinator().showAlert(alertBuilder);
+       
     }
      
     public void setDescriptionTitle(String title){
@@ -207,12 +268,7 @@ public class ActivityEditFormPanelController extends ContentPanelController{
         
     }
     
-    public void setIDProcValue(Integer id){
-        
-         this.idProcField.setText(Integer.toString(id));
-        
-    }
-    
+     
     
     public void setToggleButtonInter(Boolean value){
         if(value)
@@ -220,17 +276,15 @@ public class ActivityEditFormPanelController extends ContentPanelController{
     }
     
 
-    @Override
-    public void prepare(Segue segue) {
-        if(segue != null){
-            ActivitiesPanelController activitiesPanelController = (ActivitiesPanelController) segue.getSeguePanelController();
-            //activitiesPanelController.g
-        }
-    }
-
+   
     @Override
     public Logger getLogger() {
        return LOG;
+    }
+
+    @Override
+    public void prepare(Segue segue) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

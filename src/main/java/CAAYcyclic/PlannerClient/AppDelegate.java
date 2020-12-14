@@ -5,7 +5,6 @@
  */
 package CAAYcyclic.PlannerClient;
 
-import CAAYcyclic.PlannerClient.controller.frame.MainFrameController;
 import CAAYcyclic.PlannerClient.coordinator.ICoordinator;
 import CAAYcyclic.PlannerClient.coordinator.impl.AppCoordinator;
 import CAAYcyclic.PlannerClient.navigation.NavigationController;
@@ -36,14 +35,10 @@ public class AppDelegate extends WindowAdapter {
 
     public static void main(String[] args) {
         newMain();
+       // oldMain();
     }
     
-    @Deprecated
-    public static void oldMain() {
-        MainFrameController mainFrameController = new MainFrameController();
-        mainFrameController.setMainFrameWindowsAdapter(AppDelegate.getIstance());
-    }
-    
+        
     public static void newMain() {
         AppDelegate.getIstance().mainFrame = new MainFrame();
         AppDelegate.getIstance().mainFrame.setWindowsAdapter(istance);

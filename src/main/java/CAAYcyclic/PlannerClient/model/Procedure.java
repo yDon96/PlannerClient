@@ -62,6 +62,13 @@ public class Procedure implements Parcelable{
         this.title = parcel.readString();
         this.description = parcel.readString();
     }
+
+    @Override
+    public String toString() {
+        return "Procedure{" + "id=" + id + ", title=" + title + ", description=" + description + '}';
+    }
+    
+    
     
     
 }

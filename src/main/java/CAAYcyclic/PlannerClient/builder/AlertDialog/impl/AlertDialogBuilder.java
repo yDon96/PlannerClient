@@ -5,7 +5,6 @@
  */
 package CAAYcyclic.PlannerClient.builder.AlertDialog.impl;
 
-import CAAYcyclic.PlannerClient.controller.frame.MainFrameController;
 import CAAYcyclic.PlannerClient.navigation.NavigationController;
 import CAAYcyclic.PlannerClient.view.frame.AlertJDialog;
 import CAAYcyclic.PlannerClient.view.panel.content.AlertPanel;
@@ -84,20 +83,7 @@ public class AlertDialogBuilder implements IAlertBuilder {
         this.negativeAction = action;
     }
     
-    @Deprecated
-    public void show() {
-        MainFrameController mainFrameController = NavigationController.getInstance().getFrameController();
-        if(mainFrameController == null){
-            LOG.log(java.util.logging.Level.SEVERE, "Dialog parent frame not exist.");
-            return;
-        }
-        dialog = new AlertJDialog(mainFrameController.getMainFrame(), true);
-        dialog.setContentPane(getAlertPanel());
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setVisible(true);
-        LOG.log(java.util.logging.Level.WARNING, "Showing Dialog.");
-    }
-    
+     
     @Override
     public void display() {
         if(parentFrame == null){

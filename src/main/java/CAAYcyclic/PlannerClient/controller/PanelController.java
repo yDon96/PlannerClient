@@ -5,7 +5,6 @@
  */
 package CAAYcyclic.PlannerClient.controller;
 
-import CAAYcyclic.PlannerClient.controller.container.ContainerController;
 import CAAYcyclic.PlannerClient.coordinator.IAppCoordinator;
 import CAAYcyclic.PlannerClient.factory.container.IContainerViewAbstractFactory;
 import CAAYcyclic.PlannerClient.model.Parcel;
@@ -24,9 +23,7 @@ public abstract class PanelController implements IPanelController{
     
     private JPanel panel;
     
-    @Deprecated
-    private ContainerController containerController;
-    
+      
     private IAppCoordinator coordinator;
     
     private HashMap<String,Parcel> parcels;
@@ -37,24 +34,14 @@ public abstract class PanelController implements IPanelController{
 
     public PanelController() {
         LOG = getLogger();
-        containerController = NavigationController.getInstance().getCurrentContainer();
+        
     }
 
     public void setPanel(JPanel panel) {
         this.panel = panel;
     }
 
-    @Deprecated
-    public void setContainerController(ContainerController containerController) {
-        this.containerController = containerController;
-    }
-
-    @Deprecated
-    public ContainerController getContainerController() {
-        return containerController;
-    }
-    
-
+       
     @Override
     public void unlockNavigation(){
         LOG.log(java.util.logging.Level.WARNING, "Unlock Navigation.");
@@ -108,29 +95,8 @@ public abstract class PanelController implements IPanelController{
         LOG.log(java.util.logging.Level.INFO, "Switch current panel with: {0}", panelName.getName());
         NavigationController.getInstance().performPanelNavigationTo(panelName);
     }
-    /**
-     * Initiates the new view with the specified view factory from the current panel controller's 
-     * @param factory IContainerViewAbstractFactory
-     */
-    @Deprecated
-    public void startView(IContainerViewAbstractFactory factory){
-        LOG.log(java.util.logging.Level.INFO, "Switch current view with the one given from: {0}", factory.getClass().getName());
-        NavigationController.getInstance().performViewNavigationTo(factory);
-    }
-    
-    /**
-     * Pops to last view controller from the navigation stack and updates the display.
-     */
-    @Deprecated
-    public void popBackView(){
-        LOG.log(java.util.logging.Level.INFO, "Pop back to last view.");
-        if(lockNavigation == false){
-            NavigationController.getInstance().performBackToStack();
-        } else {
-            LOG.log(java.util.logging.Level.WARNING, "Navigation is locked.");
-        }
-    }
-    
+       
+       
     @Override
     public JPanel getPanel() {
         return panel;

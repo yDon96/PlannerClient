@@ -7,18 +7,18 @@ package CAAYcyclic.PlannerClient.controller.content;
 
 import CAAYcyclic.PlannerClient.api.ApiManager;
 import CAAYcyclic.PlannerClient.api.delegate.ApiActivityDelegate;
-import CAAYcyclic.PlannerClient.api.model.Activity;
+import CAAYcyclic.PlannerClient.api.delegate.ApiProcedureDelegate;
+import CAAYcyclic.PlannerClient.model.Activity;
 import CAAYcyclic.PlannerClient.builder.AlertDialog.impl.AlertDialogBuilder;
-import CAAYcyclic.PlannerClient.controller.PanelController;
 import CAAYcyclic.PlannerClient.enumeration.TableViewHeaders;
-import CAAYcyclic.PlannerClient.factory.container.ActivitiesAddContainerViewFactory;
-import CAAYcyclic.PlannerClient.factory.container.ActivitiesEditContainerViewFactory;
-import CAAYcyclic.PlannerClient.factory.container.IContainerViewAbstractFactory;
-import CAAYcyclic.PlannerClient.navigation.NavigationController;
+import CAAYcyclic.PlannerClient.model.Parcel;
+import CAAYcyclic.PlannerClient.model.Procedure;
+import CAAYcyclic.PlannerClient.model.ProceduresList;
 import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.content.ActivitiesPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,7 +26,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
 /**
  *
@@ -43,19 +42,23 @@ public class ActivitiesPanelController extends ContentPanelController{
     private JTable table;
     private JComboBox weekComboBox;
     List<Activity> activities;
+    ProceduresList procedures;
+    Boolean isReady = false;
     
     public ActivitiesPanelController() {
         super();
-        setContentPanel(ActivitiesPanel.class);        
+        setContentPanel(ActivitiesPanel.class);  
+        initComponent();
+        setButtonAction();
     }
     
      @Override
     public void panelDidAppear() {
         super.panelDidAppear();
-        initComponent();
-        setButtonAction();
+       
         LOG.log(java.util.logging.Level.INFO, "Start update action.");
-        startUpdate();
+      //  startUpdate();
+       startGetProcedures();
         
     }
     
@@ -69,8 +72,8 @@ public class ActivitiesPanelController extends ContentPanelController{
         table = activitiesView.getTableView();
         weekComboBox = activitiesView.getWeekComboBox();
         activitiesView.setTableHeader(TableViewHeaders.ACTIVITY.value);
-
-    }
+        procedures = new ProceduresList();
+   }
     
      private void setButtonAction() {
         updateBtn.addMouseListener(updateBtnAction);
@@ -81,56 +84,69 @@ public class ActivitiesPanelController extends ContentPanelController{
          private MouseAdapter updateBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            super.mousePressed(mouseEvent);
+            super.mouseClicked(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "Start update action.");
             startUpdate();
         }
     };
          
-         private MouseAdapter editBtnAction = new MouseAdapter() {
+             private MouseAdapter editBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            super.mousePressed(mouseEvent);
+            super.mouseClicked(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "Start edit action.");
             if (table.getRowCount() < 0 || table.getSelectedRow() < 0) {
                 LOG.log(java.util.logging.Level.WARNING, "Number of row is \"0\" or no row is selected.");
                 showError("Edit Error", "No element is selected.");
                 return;
             }
+           
             
-            if (!isLockNavigation()) {
- 
-               ActivitiesEditContainerViewFactory factEdit = new ActivitiesEditContainerViewFactory();
-            //   prepare(new Segue(factEdit.getContentPanelController()));
-               startView(factEdit);               
-               prepare(new Segue(factEdit.getContentPanelController()));
-               
-            } else {
-                LOG.log(java.util.logging.Level.WARNING, "Cannot swich panel, navigation is locked.");
-                showSelectionError("Wait until data ends updating.");
+            if (procedures.getList() !=null){
+                   getCoordinator().navigateActivitiesPanelToEditForm(activities.get(table.getSelectedRow()),
+                   procedures);
             }
             
-           
+            
+                               
+            
+         
         }
     };
          
      private final MouseAdapter addBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
-            super.mousePressed(mouseEvent);
+            super.mouseClicked(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "Start add action.");
-            if (!isLockNavigation()) {
-                startView(new ActivitiesAddContainerViewFactory());
-            } else {
-                LOG.log(java.util.logging.Level.WARNING, "Cannot swich panel, navigation is locked.");
-                showSelectionError("Wait until data ends updating.");
-            }
+            
+             if (procedures.getList() !=null){
+                 getCoordinator().navigateActivitiesPanelToAddForm(procedures);
+             }
+             else
+                getCoordinator().navigateActivitiesPanelToAddFormWithNoProcedures();
+               
+          
+             
+            
+           
+        
+//            if (!isLockNavigation()) {
+//                startView(new ActivitiesAddContainerViewFactory());
+//            } else {
+//                LOG.log(java.util.logging.Level.WARNING, "Cannot swich panel, navigation is locked.");
+//                showSelectionError("Wait until data ends updating.");
+//            }
         }
     };
+     
+    private void startGetProcedures(){
+        ApiManager.getIstance().getProcedures(apiDelegateProc);
+    }
          
     private void startUpdate() {
         updateBtn.setText("Refreshing...");        
-        NavigationController.getInstance().lockNavigation();
+       // NavigationController.getInstance().lockNavigation();
         ApiManager.getIstance().getActivities(apiDelegate);
     }
     
@@ -143,6 +159,10 @@ public class ActivitiesPanelController extends ContentPanelController{
         return activities;
     }
     
+    public void setProcedures(List<Parcel> procedures) {
+        this.procedures.setList((ArrayList<Parcel>) procedures);
+        isReady = true;
+    }
     
     
     private ApiActivityDelegate apiDelegate = new ApiActivityDelegate() {
@@ -218,11 +238,51 @@ public class ActivitiesPanelController extends ContentPanelController{
         public void onCreateSuccess() {
             endUpdate();
         }
+
+        
+    };
+    
+    private ApiProcedureDelegate apiDelegateProc = new ApiProcedureDelegate() {
+        @Override
+        public void onGetAllSuccess(List<Procedure> proceduresRec) {
+            if (proceduresRec.size() > 0) {
+                
+                 Iterator<Procedure> it = proceduresRec.iterator();
+                 ArrayList<Parcel> parcelProcedure = new ArrayList<Parcel>();
+                 
+                 while (it.hasNext()) {
+                     Parcel parcel = it.next().convertToParcel();
+                     parcelProcedure.add(parcel);                    
+                     
+                 }
+                
+                                
+                setProcedures(parcelProcedure);
+              
+        }
+        }
+
+        @Override
+        public void onGetSuccess(Procedure procedure) {
+            ;
+            //endUpdate();
+        }
+
+        @Override
+        public void onFailure(String message) {
+//            endUpdate();
+//            showSelectionError(message);
+        }
+
+        @Override
+        public void onCreateSuccess() {
+            ;
+        }
     };
     
      private void endUpdate() {
         updateBtn.setText("Refresh");
-        NavigationController.getInstance().unlockNavigation();
+      //  NavigationController.getInstance().unlockNavigation();
         
     }
     
@@ -239,7 +299,7 @@ public class ActivitiesPanelController extends ContentPanelController{
         alertBuilder.setTitle(title);
         alertBuilder.setMessage(message);
         alertBuilder.setDefaultPositiveAction();
-        alertBuilder.show();
+        getCoordinator().showAlert(alertBuilder);
     }
 
 

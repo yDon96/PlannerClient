@@ -24,13 +24,17 @@ public class BackBarController extends BarController {
     public BackBarController() {
         super();
         setBarPanel(BackSideBarPanel.class);
+        initComponent();
     }
     
     @Override
     public void panelDidAppear() {
-        super.panelDidAppear();
+        super.panelDidAppear();        
+    }
+    
+     private void initComponent() {
         this.mainSideBarView = (BackSideBarPanel) getPanel();
-         mainSideBarView.getBackBtn().addMouseListener(backBtnAction);
+        mainSideBarView.getBackBtn().addMouseListener(backBtnAction);
     }
 
      
@@ -43,11 +47,11 @@ public class BackBarController extends BarController {
     };
     
     private void backAction() {
-        if(!isLockNavigation()){
-            popBackView();
-        } else {
-            LOG.log(java.util.logging.Level.WARNING, "Cannot popBack, navigation is locked.");
-        }
+      //  if(!isLockNavigation()){
+            getCoordinator().popBack();
+//        } else {
+//            LOG.log(java.util.logging.Level.WARNING, "Cannot popBack, navigation is locked.");
+//        }
     }
 
     @Override

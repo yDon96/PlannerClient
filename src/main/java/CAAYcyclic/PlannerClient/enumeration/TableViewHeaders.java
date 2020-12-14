@@ -10,7 +10,7 @@ package CAAYcyclic.PlannerClient.enumeration;
  * @author User
  */
 public enum TableViewHeaders {
-    ACTIVITY( new String[] {"Id", "Description", "ETA", "Interruptable", "Week", "Maintainer", "Procedure"});
+    ACTIVITY( new String[] {"Activity Id", "Description", "ETA", "Interruptable", "Week", "Maintainer Id", "Procedure Id"});
    
 
     public final String[] value;

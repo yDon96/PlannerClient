@@ -7,6 +7,8 @@ package CAAYcyclic.PlannerClient.coordinator;
 
 import CAAYcyclic.PlannerClient.builder.AlertDialog.IAlertBuilder;
 import CAAYcyclic.PlannerClient.model.Parcelable;
+import CAAYcyclic.PlannerClient.model.Procedure;
+import java.util.List;
 
 /**
  *
@@ -17,4 +19,14 @@ public interface IAppCoordinator {
     void popBack();
     
     void showAlert(IAlertBuilder alert);
+    
+    void switchPanelToDash();
+    
+    void switchPanelToActivitiesPanel();
+       
+    void navigateActivitiesPanelToAddForm(Parcelable procedureList);
+    
+    void navigateActivitiesPanelToAddFormWithNoProcedures();
+    
+    void navigateActivitiesPanelToEditForm(Parcelable activity, Parcelable procedureList);
 }
