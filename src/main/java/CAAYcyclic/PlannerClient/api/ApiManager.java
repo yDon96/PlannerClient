@@ -6,8 +6,8 @@
 package CAAYcyclic.PlannerClient.api;
 
 import CAAYcyclic.PlannerClient.api.delegate.ApiDelegate;
-import CAAYcyclic.PlannerClient.api.model.Activity;
-import CAAYcyclic.PlannerClient.api.model.Procedure;
+import CAAYcyclic.PlannerClient.model.Activity;
+import CAAYcyclic.PlannerClient.model.Procedure;
 import CAAYcyclic.PlannerClient.api.model.ServerSettings;
 import CAAYcyclic.PlannerClient.model.User;
 import com.google.gson.Gson;
