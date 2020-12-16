@@ -14,7 +14,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class RoundedJTextArea extends JTextArea {
 

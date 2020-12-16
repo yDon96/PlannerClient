@@ -9,7 +9,7 @@ import CAAYcyclic.PlannerClient.enumeration.ApplicationColor;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class DashBoardPanel extends javax.swing.JPanel {
 
@@ -51,7 +51,7 @@ public class DashBoardPanel extends javax.swing.JPanel {
         );
         roundedPanel1Layout.setVerticalGroup(
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 497, Short.MAX_VALUE)
+            .addGap(0, 518, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -64,7 +64,7 @@ public class DashBoardPanel extends javax.swing.JPanel {
                     .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 314, Short.MAX_VALUE)))
+                        .addGap(0, 331, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

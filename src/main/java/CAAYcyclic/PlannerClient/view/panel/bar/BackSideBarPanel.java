@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class BackSideBarPanel extends javax.swing.JPanel {
 

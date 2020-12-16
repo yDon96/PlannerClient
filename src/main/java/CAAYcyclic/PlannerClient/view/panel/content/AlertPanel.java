@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class AlertPanel extends javax.swing.JPanel {
 

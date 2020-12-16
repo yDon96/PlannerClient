@@ -17,7 +17,7 @@ import javax.swing.JButton;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public final class RoundedButton extends JButton{
 

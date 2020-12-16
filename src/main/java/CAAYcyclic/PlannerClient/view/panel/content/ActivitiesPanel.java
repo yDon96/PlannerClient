@@ -14,7 +14,7 @@ import javax.swing.JTable;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ActivitiesPanel extends javax.swing.JPanel {
 
@@ -46,6 +46,14 @@ public class ActivitiesPanel extends javax.swing.JPanel {
         return editBtn;
     }
 
+    public JButton getAssignBtn() {
+        return assignBtn;
+    }
+
+    public void setAssignBtn(JButton assignBtn) {
+        this.assignBtn = assignBtn;
+    }
+    
     public JTable getTableView() {
         return tableView;
     }
@@ -101,6 +109,7 @@ public class ActivitiesPanel extends javax.swing.JPanel {
         updateBtn = new javax.swing.JButton();
         addBtn = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
+        assignBtn = new javax.swing.JButton();
 
         titleTable.setBackground(new java.awt.Color(255, 255, 255));
         titleTable.setFont(new java.awt.Font("Lucida Sans", 1, 36)); // NOI18N
@@ -129,9 +138,10 @@ public class ActivitiesPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tableView);
 
         weekComboBox.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        weekComboBox.setForeground(ApplicationColor.primaryColor.value);
         weekComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
         weekComboBox.setToolTipText("");
-        weekComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 14))); // NOI18N
+        weekComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 14), ApplicationColor.primaryColor.value)); // NOI18N
         weekComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 weekComboBoxActionPerformed(evt);
@@ -140,6 +150,7 @@ public class ActivitiesPanel extends javax.swing.JPanel {
 
         updateBtn.setBackground(new java.awt.Color(255, 255, 255));
         updateBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        updateBtn.setForeground(ApplicationColor.primaryColor.value);
         updateBtn.setText("Refresh");
         updateBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -156,6 +167,7 @@ public class ActivitiesPanel extends javax.swing.JPanel {
 
         addBtn.setBackground(new java.awt.Color(255, 255, 255));
         addBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        addBtn.setForeground(ApplicationColor.primaryColor.value);
         addBtn.setText("Add");
         addBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -172,6 +184,7 @@ public class ActivitiesPanel extends javax.swing.JPanel {
 
         editBtn.setBackground(new java.awt.Color(255, 255, 255));
         editBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        editBtn.setForeground(ApplicationColor.primaryColor.value);
         editBtn.setText("Edit");
         editBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         editBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -193,7 +206,7 @@ public class ActivitiesPanel extends javax.swing.JPanel {
             .addGroup(roundedPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 618, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
                     .addGroup(roundedPanel1Layout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(weekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -219,9 +232,25 @@ public class ActivitiesPanel extends javax.swing.JPanel {
                             .addComponent(editBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        assignBtn.setBackground(new java.awt.Color(255, 255, 255));
+        assignBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        assignBtn.setText("Assign");
+        assignBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        assignBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                assignBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                assignBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                assignBtnMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -232,9 +261,13 @@ public class ActivitiesPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(titleTable, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 448, Short.MAX_VALUE))
+                        .addGap(0, 513, Short.MAX_VALUE))
                     .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(assignBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +276,9 @@ public class ActivitiesPanel extends javax.swing.JPanel {
                 .addComponent(titleTable, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(assignBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -256,6 +291,8 @@ public class ActivitiesPanel extends javax.swing.JPanel {
          hightlightButton(updateBtn);
     }//GEN-LAST:event_updateBtnMouseEntered
 
+     
+         
     private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
         // TODO add your handling code here:
          resetHightlightedButton(updateBtn);
@@ -291,14 +328,32 @@ public class ActivitiesPanel extends javax.swing.JPanel {
         resetHightlightedButton(addBtn);
     }//GEN-LAST:event_addBtnMouseClicked
 
+    
+    
     private void editBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editBtnMouseClicked
         // TODO add your handling code here:
         resetHightlightedButton(editBtn);
     }//GEN-LAST:event_editBtnMouseClicked
 
+    private void assignBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseClicked
+        // TODO add your handling code here:
+        resetHightlightedButton(assignBtn);;
+    }//GEN-LAST:event_assignBtnMouseClicked
+
+    private void assignBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseEntered
+        // TODO add your handling code here:
+          hightlightButton(assignBtn);
+    }//GEN-LAST:event_assignBtnMouseEntered
+
+    private void assignBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseExited
+        // TODO add your handling code here:
+        resetHightlightedButton(assignBtn);
+    }//GEN-LAST:event_assignBtnMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
+    private javax.swing.JButton assignBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JScrollPane jScrollPane1;
     private CAAYcyclic.PlannerClient.view.panel.component.RoundedPanel roundedPanel1;

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public final class MainSideBarPanel extends JPanel {
 
@@ -96,7 +96,6 @@ public final class MainSideBarPanel extends JPanel {
         maintBtn.setBackground(ApplicationColor.primaryColor.value);
         maintBtn.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
         maintBtn.setForeground(new java.awt.Color(255, 255, 255));
-        maintBtn.setText("Maintainers Availability");
         maintBtn.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0), javax.swing.BorderFactory.createMatteBorder(0, 0, 0, 3, new java.awt.Color(242, 241, 241))));
         maintBtn.setBorderPainted(false);
         maintBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -105,7 +104,7 @@ public final class MainSideBarPanel extends JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(dashBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
             .addComponent(activitiesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(maintBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );

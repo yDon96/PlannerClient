@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.view.panel.component;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 import java.awt.Color;
 import java.awt.Graphics;

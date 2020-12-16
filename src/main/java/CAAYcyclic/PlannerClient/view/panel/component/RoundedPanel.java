@@ -14,7 +14,7 @@ import java.awt.RenderingHints;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class RoundedPanel extends javax.swing.JPanel {
 

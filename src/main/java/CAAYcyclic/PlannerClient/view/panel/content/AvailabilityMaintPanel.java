@@ -5,9 +5,17 @@
  */
 package CAAYcyclic.PlannerClient.view.panel.content;
 
+import CAAYcyclic.PlannerClient.enumeration.ApplicationColor;
+import java.awt.Color;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+
 /**
  *
- * @author User
+ * @author Amos
  */
 public class AvailabilityMaintPanel extends javax.swing.JPanel {
 
@@ -16,7 +24,80 @@ public class AvailabilityMaintPanel extends javax.swing.JPanel {
      */
     public AvailabilityMaintPanel() {
         initComponents();
+        weekComboBox.setBackground(Color.white);
+        dayComboBox.setBackground(Color.white);
+        
+         for(int i = 2; i < 53; i++ )
+          weekComboBox.addItem(Integer.toString(i));
+         
+         tableView.setDefaultEditor(Object.class, null);
+
     }
+    
+      private void hightlightButton(JButton button){
+        button.setForeground(ApplicationColor.accentColor.value);
+        button.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createMatteBorder(0,0,3,0,ApplicationColor.accentColor.value),BorderFactory.createEmptyBorder(1,1,1,1)));
+        button.repaint();
+        button.revalidate();
+    }
+
+    private void resetHightlightedButton(JButton button){
+        button.setForeground(ApplicationColor.primaryColor.value);
+        button.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+        button.repaint();
+        button.revalidate();
+
+    }
+    
+      public JTable getTableView() {
+        return tableView;
+    }
+
+    public JButton getUpdateBtn() {
+        return updateBtn;
+    }
+    
+    public JComboBox getWeekComboBox(){
+        return weekComboBox;
+    }
+    
+    public JComboBox getDayComboBox(){
+        return dayComboBox;
+    }
+    
+    public void setTableHeader(String[] headers) {
+        if(headers != null){
+            tableView.setModel(new javax.swing.table.DefaultTableModel(null,
+                headers
+            ));
+        }
+
+    }
+    
+
+    public JLabel getDescrptionActivityLabel() {
+        return descrptionActivityLabel;
+    }
+
+    public void setDescrptionActivityLabel(JLabel descrptionActivityLabel) {
+        this.descrptionActivityLabel = descrptionActivityLabel;
+    }
+
+    public JLabel getIdActivityLabel() {
+        return idActivityLabel;
+    }
+
+    public void setIdActivityLabel(JLabel idActivityLabel) {
+        this.idActivityLabel = idActivityLabel;
+    }
+
+    public JButton getAssignBtn() {
+        return assignBtn;
+    }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,25 +110,144 @@ public class AvailabilityMaintPanel extends javax.swing.JPanel {
 
         titleTable = new javax.swing.JLabel();
         roundedPanel1 = new CAAYcyclic.PlannerClient.view.panel.component.RoundedPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableView = new javax.swing.JTable();
+        weekComboBox = new javax.swing.JComboBox<>();
+        updateBtn = new javax.swing.JButton();
+        assignBtn = new javax.swing.JButton();
+        dayComboBox = new javax.swing.JComboBox<>();
+        idActivityLabel = new javax.swing.JLabel();
+        descrptionActivityLabel = new javax.swing.JLabel();
 
         titleTable.setBackground(new java.awt.Color(255, 255, 255));
         titleTable.setFont(new java.awt.Font("Lucida Sans", 1, 36)); // NOI18N
         titleTable.setForeground(ApplicationColor.primaryColor.value);
-        titleTable.setText("Maintainer Availability");
+        titleTable.setText("Assign Activity");
 
-        roundedPanel1.setBackground(new java.awt.Color(250, 250, 250));
-        roundedPanel1.setForeground(new java.awt.Color(250, 250, 250));
+        roundedPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        roundedPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        roundedPanel1.setToolTipText("");
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+        tableView.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        tableView.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane1.setViewportView(tableView);
+
+        weekComboBox.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        weekComboBox.setForeground(ApplicationColor.primaryColor.value);
+        weekComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1" }));
+        weekComboBox.setToolTipText("");
+        weekComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Week", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 14), ApplicationColor.primaryColor.value)); // NOI18N
+        weekComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                weekComboBoxActionPerformed(evt);
+            }
+        });
+
+        updateBtn.setBackground(new java.awt.Color(255, 255, 255));
+        updateBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        updateBtn.setForeground(ApplicationColor.primaryColor.value);
+        updateBtn.setText("Refresh");
+        updateBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateBtnMouseExited(evt);
+            }
+        });
+
+        assignBtn.setBackground(new java.awt.Color(255, 255, 255));
+        assignBtn.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        assignBtn.setForeground(ApplicationColor.primaryColor.value);
+        assignBtn.setText("Assign");
+        assignBtn.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        assignBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                assignBtnMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                assignBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                assignBtnMouseExited(evt);
+            }
+        });
+
+        dayComboBox.setFont(new java.awt.Font("Lucida Sans", 1, 14)); // NOI18N
+        dayComboBox.setForeground(ApplicationColor.primaryColor.value);
+        dayComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" }));
+        dayComboBox.setToolTipText("");
+        dayComboBox.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Day", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Sans", 1, 14), ApplicationColor.primaryColor.value)); // NOI18N
+        dayComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dayComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout roundedPanel1Layout = new javax.swing.GroupLayout(roundedPanel1);
         roundedPanel1.setLayout(roundedPanel1Layout);
         roundedPanel1Layout.setHorizontalGroup(
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 617, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
+                .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(roundedPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
+                    .addGroup(roundedPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(weekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(assignBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         roundedPanel1Layout.setVerticalGroup(
             roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundedPanel1Layout.createSequentialGroup()
+                .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(roundedPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(weekComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dayComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(roundedPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(roundedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(assignBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        idActivityLabel.setFont(new java.awt.Font("Lucida Sans", 1, 12)); // NOI18N
+        idActivityLabel.setForeground(ApplicationColor.primaryColor.value);
+        idActivityLabel.setText("Activity ID: ");
+
+        descrptionActivityLabel.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
+        descrptionActivityLabel.setForeground(ApplicationColor.primaryColor.value);
+        descrptionActivityLabel.setText("Activity Description: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -56,27 +256,82 @@ public class AvailabilityMaintPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(titleTable, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(titleTable)
+                            .addComponent(idActivityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(descrptionActivityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(roundedPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(12, 12, 12)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(titleTable, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(idActivityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(descrptionActivityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(roundedPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void weekComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weekComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_weekComboBoxActionPerformed
+
+    private void updateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseClicked
+        // TODO add your handling code here:
+        resetHightlightedButton(updateBtn);
+    }//GEN-LAST:event_updateBtnMouseClicked
+
+    private void updateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseEntered
+        // TODO add your handling code here:
+        hightlightButton(updateBtn);
+        
+    }//GEN-LAST:event_updateBtnMouseEntered
+
+    private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
+        // TODO add your handling code here:
+        resetHightlightedButton(updateBtn);
+    }//GEN-LAST:event_updateBtnMouseExited
+
+    private void assignBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseClicked
+        // TODO add your handling code here:
+        resetHightlightedButton(assignBtn);
+    }//GEN-LAST:event_assignBtnMouseClicked
+
+    private void assignBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseEntered
+        // TODO add your handling code here:
+        hightlightButton(assignBtn);
+    }//GEN-LAST:event_assignBtnMouseEntered
+
+    private void assignBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_assignBtnMouseExited
+        // TODO add your handling code here:
+        resetHightlightedButton(assignBtn);
+    }//GEN-LAST:event_assignBtnMouseExited
+
+    private void dayComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dayComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dayComboBoxActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton assignBtn;
+    private javax.swing.JComboBox<String> dayComboBox;
+    private javax.swing.JLabel descrptionActivityLabel;
+    private javax.swing.JLabel idActivityLabel;
+    private javax.swing.JScrollPane jScrollPane1;
     private CAAYcyclic.PlannerClient.view.panel.component.RoundedPanel roundedPanel1;
+    private javax.swing.JTable tableView;
     private javax.swing.JLabel titleTable;
+    private javax.swing.JButton updateBtn;
+    private javax.swing.JComboBox<String> weekComboBox;
     // End of variables declaration//GEN-END:variables
 }

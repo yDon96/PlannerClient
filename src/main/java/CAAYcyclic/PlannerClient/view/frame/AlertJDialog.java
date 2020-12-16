@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.view.frame;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class AlertJDialog extends javax.swing.JDialog {
 
