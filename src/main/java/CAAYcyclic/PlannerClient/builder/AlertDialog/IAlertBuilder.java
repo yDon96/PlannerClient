@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface IAlertBuilder {
     

@@ -19,7 +19,7 @@ import CAAYcyclic.PlannerClient.builder.AlertDialog.IAlertBuilder;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class AlertDialogBuilder implements IAlertBuilder {
     
@@ -41,6 +41,7 @@ public class AlertDialogBuilder implements IAlertBuilder {
         this.parentFrame = parentFrame;
     }
 
+    @Override
     public void setParentFrame(JFrame parentFrame) {
         this.parentFrame = parentFrame;
     }

@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.builder;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ActivitiesDataPanelBuilder  {
     
