@@ -5,19 +5,14 @@
  */
 package CAAYcyclic.PlannerClient.api.delegate;
 
-import CAAYcyclic.PlannerClient.model.Activity;
-import java.util.List;
 
 /**
  *
  * @author Amos
  */
-public interface ApiActivityDelegate extends ApiDelegate<Activity> {
+public interface ApiNumberOfSkill extends ApiDelegate<Integer> {
     
     @Override
-    public void onGetAllSuccess(List<Activity> activities);
-
-    @Override
-    public void onGetSuccess(Activity activity);
+    void onGetSuccess(Integer numberSkill);    
     
 }

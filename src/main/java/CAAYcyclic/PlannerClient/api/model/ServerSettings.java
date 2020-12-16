@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.api.model;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class ServerSettings {
     private final String host = "127.0.0.1";

@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class ApiManager {
 
@@ -79,10 +79,10 @@ public class ApiManager {
         call.enqueue(getUserCallback);
     }
     
-    public void getUsers(ApiDelegate apiDelegate){
+    public void getUsers(ApiDelegate apiDelegate, List<String> listRoles){
         LOG.log(java.util.logging.Level.CONFIG, "Get all users.");
         this.apiDelegate = apiDelegate;
-        Call<List<User>> call = apiCall.getAllUser();
+        Call<List<User>> call = apiCall.getAllUser(listRoles);
         call.enqueue(getUsersCallback);
     }
     
@@ -125,6 +125,15 @@ public class ApiManager {
         
     }
     
+    public void getMaintainersAvailability(ApiDelegate apiDelegate,Integer week, Integer day, Integer id){
+        LOG.log(java.util.logging.Level.CONFIG, "Get Maintainers Availability");
+        this.apiDelegate = apiDelegate;
+        Call<List<Activity>> call = apiCall.getActivityByWeekDayUser(week, day, id);
+  
+        call.enqueue(getMaintAvailCallback);
+    }
+    
+       
     public void getActivities (ApiDelegate apiDelegate){
         LOG.log(java.util.logging.Level.CONFIG, "Get all activities.");
         this.apiDelegate = apiDelegate;
@@ -133,13 +142,31 @@ public class ApiManager {
         
     }
     
+     public void getActivitiesByWeek (ApiDelegate apiDelegate, Integer week){
+        LOG.log(java.util.logging.Level.CONFIG, "Get all activities by week n\u00b0{0}", week);
+        this.apiDelegate = apiDelegate;
+        Call<List<Activity>> call = apiCall.getActivityByWeek(week);
+        call.enqueue(getActivitiesCallback);
+        
+    }
+    
+    
+    
+    public void getNumberOfSkill(ApiDelegate apiDelegate, Integer userId, Integer procedureId){
+        LOG.log(java.util.logging.Level.CONFIG, "Get Maintainers N° of  Skills");
+        this.apiDelegate = apiDelegate;
+        Call<Integer> call = apiCall.getNumberOfMaintCompetenciesByProc(userId, procedureId);
+  
+        call.enqueue(getSkillsNumberCallback);
+    }
+    
     private Callback<ResponseBody> postCallback = new Callback<ResponseBody>(){
         @Override
         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response){
             if (response.isSuccessful()) {
                 LOG.log(java.util.logging.Level.CONFIG, "Post response is successful.");
                 ResponseBody body = response.body();
-                if(response != null){
+                if(body != null){
                     apiDelegate.onCreateSuccess();
                 }
             } else {
@@ -161,7 +188,7 @@ public class ApiManager {
             if (response.isSuccessful()) {
                 LOG.log(java.util.logging.Level.CONFIG, "Put response is successful.");
                 ResponseBody body = response.body();
-                if(response != null){
+                if(body != null){
                     apiDelegate.onCreateSuccess();
                 }
             } else {
@@ -290,5 +317,75 @@ public class ApiManager {
             apiDelegate.onFailure(t.getMessage());
         };
     };
+    
+    private Callback<List<Activity>> getMaintAvailCallback = new Callback<List<Activity>>(){
+        @Override
+        public void onResponse(Call<List<Activity>> call, Response<List<Activity>> response){
+            if (response.isSuccessful()) {
+                LOG.log(java.util.logging.Level.CONFIG, "Get maintainers availablity is successful.");
+                List<Activity> activities = response.body();
+                LOG.log(java.util.logging.Level.CONFIG, "Get {0} activities.", String.valueOf(activities.size()));
+                if(activities != null){
+                    apiDelegate.onGetAllSuccess(activities);
+                }
+            } else {
+                LOG.log(java.util.logging.Level.SEVERE, "Get maintainers availablity response is not successful.");
+                apiDelegate.onFailure("Could not get maintainers availablity.");
+            }
+        };
+
+        @Override
+        public void onFailure(Call<List<Activity>> call, Throwable t){
+            LOG.log(java.util.logging.Level.SEVERE, "Get maintainers availablity is not successful, message: {0}.", t.getMessage());
+            apiDelegate.onFailure(t.getMessage());
+        };
+    };
+    
+    private Callback<List<List<Activity>>> getAllMaintAvailCallback = new Callback<List<List<Activity>>>(){
+        @Override
+        public void onResponse(Call<List<List<Activity>>> call, Response<List<List<Activity>>> response){
+            if (response.isSuccessful()) {
+                LOG.log(java.util.logging.Level.CONFIG, "Get all maintainers availablity is successful.");
+                List<List<Activity>> activities = response.body();              
+                if(activities != null){
+                    LOG.log(java.util.logging.Level.CONFIG, "Get {0} activities list.", String.valueOf(activities.size()));
+                    apiDelegate.onGetAllSuccess(activities);
+                }
+            } else {
+                LOG.log(java.util.logging.Level.SEVERE, "Get maintainers availablity response is not successful.");
+                apiDelegate.onFailure("Could not get maintainers availablity.");
+            }
+        };
+
+        @Override
+        public void onFailure(Call<List<List<Activity>>> call, Throwable t){
+            LOG.log(java.util.logging.Level.SEVERE, "Get maintainers availablity is not successful, message: {0}.", t.getMessage());
+            apiDelegate.onFailure(t.getMessage());
+        };
+    };
+    
+    private Callback<Integer> getSkillsNumberCallback = new Callback<Integer>(){
+        @Override
+        public void onResponse(Call<Integer> call, Response<Integer> response){
+            if (response.isSuccessful()) {
+                LOG.log(java.util.logging.Level.CONFIG, "Get user skills number is successful.");
+                Integer result = response.body();
+                if(result != null){
+                    apiDelegate.onGetSuccess(result);
+                }
+            } else {
+               LOG.log(java.util.logging.Level.SEVERE, "Get user skills number is not successful.");
+               apiDelegate.onFailure("Could not get user skills number.");
+            }
+        };
+
+        @Override
+        public void onFailure(Call<Integer> call, Throwable t){
+            LOG.log(java.util.logging.Level.SEVERE, "Get user skills number is not successful, message: {0}.", t.getMessage());
+            apiDelegate.onFailure(t.getMessage());
+        };
+    };
+    
+  
     
 }

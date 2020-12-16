@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface ApiDelegate<T> {
     

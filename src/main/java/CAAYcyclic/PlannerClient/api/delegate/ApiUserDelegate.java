@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface ApiUserDelegate extends ApiDelegate<User> {
     

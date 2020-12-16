@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface ApiProcedureDelegate extends ApiDelegate<Procedure> {
 
@@ -19,8 +19,5 @@ public interface ApiProcedureDelegate extends ApiDelegate<Procedure> {
 
     @Override
     public void onGetSuccess(Procedure procedure);
-
-    
-    
-        
+       
 }
