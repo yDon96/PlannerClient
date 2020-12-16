@@ -12,7 +12,7 @@ import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class HomeContainerViewFactory implements IContainerViewAbstractFactory {
 

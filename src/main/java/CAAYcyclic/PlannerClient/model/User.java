@@ -5,22 +5,22 @@
  */
 package CAAYcyclic.PlannerClient.model;
 
-import CAAYcyclic.PlannerClient.model.Parcel;
-import CAAYcyclic.PlannerClient.model.Parcelable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class User implements Parcelable{
     
-    Integer user_id;
-    String name;
-    String surname;
-    LocalDate dob;
-    String role;
+    private Integer user_id;
+    private String name;
+    private String surname;
+    private LocalDate dob;
+    private String role;
+    private Set<String> competencies;
 
     public Integer getUser_id() {
         return user_id;
@@ -38,6 +38,19 @@ public class User implements Parcelable{
         return dob;
     }
 
+    public void setDob(LocalDate dob) {
+        this.dob = dob;
+    }
+
+    public Set<String> getCompetencies() {
+        return competencies;
+    }
+
+    public void setCompetencies(Set<String> competencies) {
+        this.competencies = competencies;
+    }
+
+
     public String getRole() {
         return role;
     }
@@ -52,10 +65,6 @@ public class User implements Parcelable{
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
     }
 
     public void setRole(String role) {
@@ -74,7 +83,9 @@ public class User implements Parcelable{
         parcel.writeString(name);
         parcel.writeString(surname);
         parcel.writeString(dob.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        parcel.writeString(role);
+        parcel.writeString(role);        
+        parcel.writeStringSet(this.competencies);
+        
         return parcel;
     }
 
@@ -85,7 +96,16 @@ public class User implements Parcelable{
         this.surname = parcel.readString();
         this.dob = LocalDate.parse((parcel.readString()),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         this.role = parcel.readString();
+        this.competencies = parcel.readStringSet();
+        
+        
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "user_id=" + user_id + ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + dob + ", role=" + role + ", competencies=" + competencies + '}';
+    }
+    
     
     
 }

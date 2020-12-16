@@ -12,7 +12,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public abstract class Coordinator implements ICoordinator{
     

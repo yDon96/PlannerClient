@@ -6,11 +6,10 @@
 package CAAYcyclic.PlannerClient.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ProceduresList implements Parcelable{
     

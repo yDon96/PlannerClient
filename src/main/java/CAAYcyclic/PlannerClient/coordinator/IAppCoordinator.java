@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface IAppCoordinator {
     
@@ -28,5 +28,13 @@ public interface IAppCoordinator {
     
     void navigateActivitiesPanelToAddFormWithNoProcedures();
     
-    void navigateActivitiesPanelToEditForm(Parcelable activity, Parcelable procedureList);
+    void switchPanelToMaintPanel();
+    
+    void navigateActivitiesPanelToEditForm(Parcelable activity, Parcelable procedures);
+    
+    void navigateActivitiesPanelToEditForm(Parcelable activity);
+    
+    void navigateActivitiesPanelToAssignForm(Parcelable activity, Parcelable procedures);
+    
+     void navigateActivitiesPanelToAssignForm(Parcelable activity);
 }

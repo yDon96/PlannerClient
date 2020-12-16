@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.coordinator;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface ICoordinator {
     

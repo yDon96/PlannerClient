@@ -5,12 +5,9 @@
  */
 package CAAYcyclic.PlannerClient.model;
 
-import CAAYcyclic.PlannerClient.model.Parcel;
-import CAAYcyclic.PlannerClient.model.Parcelable;
-
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class Procedure implements Parcelable{
     

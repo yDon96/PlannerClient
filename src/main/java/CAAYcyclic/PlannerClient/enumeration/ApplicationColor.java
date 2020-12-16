@@ -9,7 +9,7 @@ import java.awt.Color;
 
 /**
  *
- * @author youssefdonadeo
+ * @author Amosdonadeo
  */
 public enum ApplicationColor {
     primaryColor(Color.decode("#031A6B")),

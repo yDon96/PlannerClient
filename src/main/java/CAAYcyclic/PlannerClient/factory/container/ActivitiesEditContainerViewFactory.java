@@ -13,7 +13,7 @@ import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ActivitiesEditContainerViewFactory implements IContainerViewAbstractFactory{
 

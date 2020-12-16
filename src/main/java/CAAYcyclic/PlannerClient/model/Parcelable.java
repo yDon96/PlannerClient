@@ -7,7 +7,7 @@ package CAAYcyclic.PlannerClient.model;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface Parcelable {
     

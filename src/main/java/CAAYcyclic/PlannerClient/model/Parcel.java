@@ -6,52 +6,63 @@
 package CAAYcyclic.PlannerClient.model;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class Parcel {
     
     private ArrayList<String> stringList;
     private ArrayList<Integer> integerList;
     private ArrayList<String[]> stringArrayList;
+    private ArrayList<Set<String>> stringArraySet;
     private ArrayList<Boolean> booleanList;
-    private ArrayList<Parcel> procedureArrayList;
+    private ArrayList<Parcel> parcelArrayList;
     
     public void writeString(String string){
         if(stringList == null){
-            stringList = new ArrayList<String>();
+            stringList = new ArrayList<>();
         }
         stringList.add(string);
     }
     
     public void writeInteger(Integer integer){
         if(integerList == null){
-            integerList = new ArrayList<Integer>();
+            integerList = new ArrayList<>();
         }
         integerList.add(integer);
     }
     
     public void writeBoolean(Boolean bool){
         if(booleanList == null){
-            booleanList = new ArrayList<Boolean>();
+            booleanList = new ArrayList<>();
         }
         booleanList.add(bool);
     }
     
     public void writeStringArray(String[] list){
         if(stringArrayList == null){
-            stringArrayList = new ArrayList<String[]>();
+            stringArrayList = new ArrayList<>();
         }
         stringArrayList.add(list);
     }
     
-     public void writeProcArray(ArrayList<Parcel> list){
-        if(procedureArrayList == null){
-            procedureArrayList = new ArrayList<Parcel>();
+     public void writeStringSet (Set<String> list){
+        if(stringArraySet == null){
+            stringArraySet = new ArrayList<>();
         }
-        procedureArrayList.addAll(list);
+        stringArraySet.add(list);
+    }
+    
+
+    
+     public void writeProcArray(ArrayList<Parcel> list){
+        if(parcelArrayList == null){
+            parcelArrayList = new ArrayList<>();
+        }
+        parcelArrayList.addAll(list);
     }
     
     public String readString(){
@@ -70,8 +81,12 @@ public class Parcel {
         return stringArrayList.remove(0);
     }
     
+     public Set<String> readStringSet(){
+        return stringArraySet.remove(0);
+    }
+    
     public ArrayList readProcList(){
-        return procedureArrayList;
+        return parcelArrayList;
         
     }
 }

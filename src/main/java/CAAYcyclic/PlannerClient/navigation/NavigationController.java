@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  * 
  * A navigation controller is a controller that helps container view controller to 
  * manage one or more child view controllers in a navigation interface.

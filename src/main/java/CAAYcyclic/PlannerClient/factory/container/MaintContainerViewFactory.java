@@ -7,24 +7,23 @@ package CAAYcyclic.PlannerClient.factory.container;
 
 import CAAYcyclic.PlannerClient.controller.bar.BackBarController;
 import CAAYcyclic.PlannerClient.controller.bar.BarController;
-import CAAYcyclic.PlannerClient.controller.content.ActivityAddFormPanelController;
 import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
-
+import CAAYcyclic.PlannerClient.controller.content.MaintPanelController;
 
 /**
  *
  * @author Amos
  */
-public class ActivitiesAddContainerViewFactory implements IContainerViewAbstractFactory{
+public class MaintContainerViewFactory implements IContainerViewAbstractFactory {
 
     @Override
     public BarController getBarController() {
-        return new BackBarController();
+      return new BackBarController(); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ContentPanelController getContentPanelController() {
-         return new ActivityAddFormPanelController(); //To change body of generated methods, choose Tools | Templates.
+          return new MaintPanelController();  //To change body of generated methods, choose Tools | Templates.
     }
     
 }

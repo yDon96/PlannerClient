@@ -5,25 +5,23 @@
  */
 package CAAYcyclic.PlannerClient.coordinator.impl;
 
-import CAAYcyclic.PlannerClient.model.Procedure;
 import CAAYcyclic.PlannerClient.builder.AlertDialog.IAlertBuilder;
 import CAAYcyclic.PlannerClient.controller.IPanelController;
 import CAAYcyclic.PlannerClient.controller.content.ActivitiesPanelController;
-import CAAYcyclic.PlannerClient.controller.content.ActivityAddFormPanelController;
 import CAAYcyclic.PlannerClient.controller.content.DashBoardPanelController;
+import CAAYcyclic.PlannerClient.controller.content.MaintPanelController;
 import CAAYcyclic.PlannerClient.coordinator.IAppCoordinator;
 import CAAYcyclic.PlannerClient.factory.container.ActivitiesAddContainerViewFactory;
 import CAAYcyclic.PlannerClient.factory.container.ActivitiesEditContainerViewFactory;
 import CAAYcyclic.PlannerClient.factory.container.HomeContainerViewFactory;
 import CAAYcyclic.PlannerClient.factory.container.IContainerViewAbstractFactory;
+import CAAYcyclic.PlannerClient.factory.container.MaintContainerViewFactory;
 import CAAYcyclic.PlannerClient.model.Parcelable;
 import CAAYcyclic.PlannerClient.navigation.NavigationController;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class AppCoordinator extends Coordinator implements IAppCoordinator{
 
@@ -117,6 +115,66 @@ public class AppCoordinator extends Coordinator implements IAppCoordinator{
         panelController.setCoordinator(this);
         barController.setCoordinator(this);
         navigationController.performViewNavigationTo(barController,panelController);
+    }
+
+    @Override
+    public void switchPanelToMaintPanel() {
+       IPanelController maintPanelController = navigationController.retrivePanelFromMap(MaintPanelController.class.getName());
+        if(maintPanelController == null) {
+            maintPanelController = new MaintPanelController();
+        }
+        maintPanelController.setCoordinator(this);
+        navigationController.performPanelNavigationTo(maintPanelController);
+    }
+
+    @Override
+    public void navigateActivitiesPanelToAssignForm(Parcelable activity, Parcelable procedures) {
+        IContainerViewAbstractFactory homeContainerViewFactory = new MaintContainerViewFactory();
+        IPanelController panelController = homeContainerViewFactory.getContentPanelController();
+        IPanelController barController = homeContainerViewFactory.getBarController();
+        if(activity != null){
+            panelController.setParcel(activity.getParcelableDescription(), activity.convertToParcel());
+        }
+        
+        
+        if(procedures != null){
+                panelController.setParcel(procedures.getParcelableDescription(), procedures.convertToParcel());
+        }
+        
+        panelController.setCoordinator(this);
+        barController.setCoordinator(this);
+        navigationController.performViewNavigationTo(barController,panelController);
+       
+    }
+
+    @Override
+    public void navigateActivitiesPanelToEditForm(Parcelable activity) {
+        IContainerViewAbstractFactory homeContainerViewFactory = new ActivitiesEditContainerViewFactory();
+        IPanelController panelController = homeContainerViewFactory.getContentPanelController();
+        IPanelController barController = homeContainerViewFactory.getBarController();
+        if(activity != null){
+            panelController.setParcel(activity.getParcelableDescription(), activity.convertToParcel());
+        }
+           
+        panelController.setCoordinator(this);
+        barController.setCoordinator(this);
+        navigationController.performViewNavigationTo(barController,panelController);
+    }
+
+    @Override
+    public void navigateActivitiesPanelToAssignForm(Parcelable activity) {
+       IContainerViewAbstractFactory homeContainerViewFactory = new MaintContainerViewFactory();
+        IPanelController panelController = homeContainerViewFactory.getContentPanelController();
+        IPanelController barController = homeContainerViewFactory.getBarController();
+        if(activity != null){
+            panelController.setParcel(activity.getParcelableDescription(), activity.convertToParcel());
+        }
+        
+               
+        panelController.setCoordinator(this);
+        barController.setCoordinator(this);
+        navigationController.performViewNavigationTo(barController,panelController);
+       
     }
     
 }

@@ -14,7 +14,7 @@ import java.awt.event.WindowEvent;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class AppDelegate extends WindowAdapter {
 

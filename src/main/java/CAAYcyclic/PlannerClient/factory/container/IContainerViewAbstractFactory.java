@@ -11,7 +11,7 @@ import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface IContainerViewAbstractFactory {
     
