@@ -14,7 +14,6 @@ import CAAYcyclic.PlannerClient.enumeration.TableViewHeaders;
 import CAAYcyclic.PlannerClient.model.Parcel;
 import CAAYcyclic.PlannerClient.model.Procedure;
 import CAAYcyclic.PlannerClient.model.ProceduresList;
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.content.ActivitiesPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ActivitiesPanelController extends ContentPanelController{
     
@@ -39,11 +38,11 @@ public class ActivitiesPanelController extends ContentPanelController{
     private JButton updateBtn;
     private JButton editBtn;
     private JButton addBtn;
+    private JButton assignBtn;
     private JTable table;
     private JComboBox weekComboBox;
-    List<Activity> activities;
-    ProceduresList procedures;
-    Boolean isReady = false;
+    private List<Activity> activities;
+    private ProceduresList procedures;
     
     public ActivitiesPanelController() {
         super();
@@ -52,16 +51,13 @@ public class ActivitiesPanelController extends ContentPanelController{
         setButtonAction();
     }
     
-     @Override
-    public void panelDidAppear() {
-        super.panelDidAppear();
-       
-        LOG.log(java.util.logging.Level.INFO, "Start update action.");
-      //  startUpdate();
-       startGetProcedures();
         
-    }
-    
+    @Override
+    public void panelWillAppear() {
+        super.panelWillAppear();
+        LOG.log(java.util.logging.Level.INFO, "Start update action.");
+        startGetProceduresAndActivities();       
+    }    
        
     private void initComponent() {
         LOG.log(java.util.logging.Level.CONFIG, "Init Activity panel component into controller.");
@@ -69,28 +65,42 @@ public class ActivitiesPanelController extends ContentPanelController{
         updateBtn = activitiesView.getUpdateBtn();
         editBtn = activitiesView.getEditBtn();
         addBtn = activitiesView.getAddBtn();
+        assignBtn = activitiesView.getAssignBtn();
         table = activitiesView.getTableView();
         weekComboBox = activitiesView.getWeekComboBox();
         activitiesView.setTableHeader(TableViewHeaders.ACTIVITY.value);
         procedures = new ProceduresList();
    }
     
-     private void setButtonAction() {
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;               
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
+    }
+    
+    public void setProcedures(List<Parcel> procedures) {
+        this.procedures.setList((ArrayList<Parcel>) procedures);
+    }
+        
+    private void setButtonAction() {
         updateBtn.addMouseListener(updateBtnAction);
         addBtn.addMouseListener(addBtnAction);
         editBtn.addMouseListener(editBtnAction);
+        assignBtn.addMouseListener(assignBtnAction);
     }
-     
-         private MouseAdapter updateBtnAction = new MouseAdapter() {
+         
+    private MouseAdapter updateBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             super.mouseClicked(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "Start update action.");
-            startUpdate();
+            startGetProceduresAndActivities();   
         }
     };
          
-             private MouseAdapter editBtnAction = new MouseAdapter() {
+    private MouseAdapter editBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             super.mouseClicked(mouseEvent);
@@ -106,15 +116,31 @@ public class ActivitiesPanelController extends ContentPanelController{
                    getCoordinator().navigateActivitiesPanelToEditForm(activities.get(table.getSelectedRow()),
                    procedures);
             }
+            else{
+                getCoordinator().navigateActivitiesPanelToEditForm
+                (activities.get(table.getSelectedRow()));
+            }
+                     
+        }
+    };
+             
+    private MouseAdapter assignBtnAction = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            super.mouseClicked(mouseEvent);
+            LOG.log(java.util.logging.Level.INFO, "Start assign action.");
+            if (table.getRowCount() < 0 || table.getSelectedRow() < 0) {
+                LOG.log(java.util.logging.Level.WARNING, "Number of row is \"0\" or no row is selected.");
+                showError("Assign Error", "No element is selected.");
+                return;
+            }           
             
-            
-                               
-            
-         
+            getCoordinator().navigateActivitiesPanelToAssignForm(activities.get(table.getSelectedRow()));
+                     
         }
     };
          
-     private final MouseAdapter addBtnAction = new MouseAdapter() {
+    private final MouseAdapter addBtnAction = new MouseAdapter() {
         @Override
         public void mouseClicked(MouseEvent mouseEvent) {
             super.mouseClicked(mouseEvent);
@@ -125,101 +151,30 @@ public class ActivitiesPanelController extends ContentPanelController{
              }
              else
                 getCoordinator().navigateActivitiesPanelToAddFormWithNoProcedures();
-               
-          
-             
-            
-           
-        
-//            if (!isLockNavigation()) {
-//                startView(new ActivitiesAddContainerViewFactory());
-//            } else {
-//                LOG.log(java.util.logging.Level.WARNING, "Cannot swich panel, navigation is locked.");
-//                showSelectionError("Wait until data ends updating.");
-//            }
         }
     };
-     
-    private void startGetProcedures(){
-        ApiManager.getIstance().getProcedures(apiDelegateProc);
-    }
-         
-    private void startUpdate() {
-        updateBtn.setText("Refreshing...");        
-       // NavigationController.getInstance().lockNavigation();
-        ApiManager.getIstance().getActivities(apiDelegate);
-    }
-    
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
-               
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-    
-    public void setProcedures(List<Parcel> procedures) {
-        this.procedures.setList((ArrayList<Parcel>) procedures);
-        isReady = true;
-    }
-    
     
     private ApiActivityDelegate apiDelegate = new ApiActivityDelegate() {
         @Override
         public void onGetAllSuccess(List<Activity> activitiesRec) {
             endUpdate();
+            dropTable();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+           
             if (activitiesRec.size() > 0) {              
-               
-                
                 setActivities(activitiesRec);              
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                Integer rowNumber = table.getRowCount();
-                for (int index = rowNumber - 1; index >= 0; index--) {
-                    model.removeRow(index);
-                }
-                
-                //CODICE TEMPORANEO IN ATTESA DI GET(Week='value')//
-                Iterator<Activity> it = getActivities().iterator();
-                
-                 while (it.hasNext()) {
-                     Activity activity = it.next();
-                     
-                     if(activity.getWeek()!=null && weekComboBox.getSelectedIndex()+1 == activity.getWeek()){
+                for (Activity activity : activities) {                    
                     Object[] row = {activity.getId(),activity.getDescription(), 
                         activity.getEstimatedTime()+" min", activity.isInterruptableYesNo(), 
-                        activity.getWeek(),activity.getMaintainerId(), 
+                        activity.stringDay(), activity.stringStartingTime(),
+                        activity.getMaintainerId(), 
                         activity.getProcedureId()};
                     model.addRow(row);
                     }
-                    else
-                         it.remove();                    
-            
-                 }
-                 
-                 if(activities.isEmpty())
-                     showEmptyError("No activity for the selected week");
-                 
-                 
-                 
-                 //FINE CODICE TEMPORANEO//
-                
-//                for (Activity activity : activities) {                    
-//                    if(activity.getWeek()!=null && weekComboBox.getSelectedIndex()+1 == activity.getWeek()){
-//                    Object[] row = {activity.getId(),activity.getDescription(), 
-//                        activity.getEstimatedTime()+" min", activity.isInterruptableYesNo(), 
-//                        activity.getWeek(),activity.getMaintainerId(), 
-//                        activity.getProcedureId()};
-//                    model.addRow(row);
-//                    }
-//                    
-//                }
-//                
-
-           //     numberOfRow.setText(String.valueOf(table.getRowCount()));
             }
-            else
-                     showEmptyError("There are no activity in the system");
+            else{
+                showEmptyError("No activity for the selected week");
+            }
             
         }
         @Override
@@ -230,7 +185,7 @@ public class ActivitiesPanelController extends ContentPanelController{
         @Override
         public void onFailure(String message) {
             endUpdate();
-            System.out.println("Errore "+message);
+            dropTable();
             showSelectionError(message);
         }
 
@@ -248,45 +203,58 @@ public class ActivitiesPanelController extends ContentPanelController{
             if (proceduresRec.size() > 0) {
                 
                  Iterator<Procedure> it = proceduresRec.iterator();
-                 ArrayList<Parcel> parcelProcedure = new ArrayList<Parcel>();
+                 ArrayList<Parcel> parcelProcedure = new ArrayList<>();
                  
                  while (it.hasNext()) {
                      Parcel parcel = it.next().convertToParcel();
                      parcelProcedure.add(parcel);                    
                      
-                 }
-                
+                 }             
                                 
-                setProcedures(parcelProcedure);
-              
+                 setProcedures(parcelProcedure);
+ 
         }
+             startUpdate(); 
         }
 
         @Override
         public void onGetSuccess(Procedure procedure) {
-            ;
-            //endUpdate();
+          
         }
 
         @Override
         public void onFailure(String message) {
-//            endUpdate();
-//            showSelectionError(message);
+            startUpdate();
         }
 
         @Override
         public void onCreateSuccess() {
-            ;
         }
     };
+     
+    private void startGetProceduresAndActivities(){
+        ApiManager.getIstance().getProcedures(apiDelegateProc);
+    }
+         
+    private void startUpdate() {
+        updateBtn.setText("Refreshing...");        
+        ApiManager.getIstance().getActivitiesByWeek(apiDelegate, 
+                  this.weekComboBox.getSelectedIndex()+1);
+    }    
+
+    public void dropTable(){
+        DefaultTableModel model = (DefaultTableModel) table.getModel();       
+                Integer rowNumber = table.getRowCount();
+                for (int index = rowNumber - 1; index >= 0; index--) {
+                    model.removeRow(index);
+                }
+    }  
     
-     private void endUpdate() {
-        updateBtn.setText("Refresh");
-      //  NavigationController.getInstance().unlockNavigation();
-        
+    private void endUpdate() {
+        updateBtn.setText("Refresh");             
     }
     
-     private void showEmptyError(String message) {
+    private void showEmptyError(String message) {
         showError("Empty Set Error", message);
     }
     
@@ -301,53 +269,6 @@ public class ActivitiesPanelController extends ContentPanelController{
         alertBuilder.setDefaultPositiveAction();
         getCoordinator().showAlert(alertBuilder);
     }
-
-
-    @Override
-    public void prepare(Segue segue) {
-        
-        if(segue != null){
-            ActivityEditFormPanelController editControl = null;
-           try{ 
-               editControl = (ActivityEditFormPanelController) segue.getSeguePanelController();
-           
-           }
-           catch (Exception e){
-                LOG.log(java.util.logging.Level.CONFIG, "Segue error - ActivitiesPanelController");
-                return;
-           }
-            
-        Activity selActivity = activities.get(table.getSelectedRow());
-        
-            
-//        TableModel mod =  table.getModel(); 
-//        Integer selRow = table.getSelectedRow();
-//        String ETAValue = (String) mod.getValueAt(selRow,2);
-//        String InterValue = (String) mod.getValueAt(selRow, 3);
-//       
-//        
-//       editControl.setDescriptionTitle((String) mod.getValueAt(selRow,1));    
-//       editControl.setETAValue(Integer.parseInt(ETAValue.split(" ",2)[0]));    
-//       editControl.setWeekValue((Integer) mod.getValueAt(selRow,4));
-//       editControl.setIDMaintValue((Integer) mod.getValueAt(selRow,5));
-//       editControl.setIDProcValue((Integer) mod.getValueAt(selRow,6));
-       
-//         editControl.setDescriptionTitle(selActivity.getDescription());
-//         editControl.setETAValue(selActivity.getEstimatedTime());
-//         editControl.setWeekValue(selActivity.getWeek());
-//         editControl.setIDMaintValue(selActivity.getMaintainerId());
-//         editControl.setIDProcValue(selActivity.getProcedureId());
-//         editControl.setToggleButtonInter(selActivity.isInterruptable());
-
-        editControl.setActivityToEdit(selActivity);
-        editControl.fillPanel();
-       
-           
-           
-        }
-       
-    }
-
     @Override
     public Logger getLogger() {
         return LOG;

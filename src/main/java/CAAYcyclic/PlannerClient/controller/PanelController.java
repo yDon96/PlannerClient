@@ -6,10 +6,7 @@
 package CAAYcyclic.PlannerClient.controller;
 
 import CAAYcyclic.PlannerClient.coordinator.IAppCoordinator;
-import CAAYcyclic.PlannerClient.factory.container.IContainerViewAbstractFactory;
 import CAAYcyclic.PlannerClient.model.Parcel;
-import CAAYcyclic.PlannerClient.navigation.NavigationController;
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -17,7 +14,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public abstract class PanelController implements IPanelController{
     
@@ -77,25 +74,7 @@ public abstract class PanelController implements IPanelController{
     public void panelDidDisappear(){
         LOG.log(java.util.logging.Level.INFO, "{0} did disappear.", panel.getClass().getName());
     }
-    
-    /**
-     * Notifies the view controller that a navigation event is about to be performed.
-     * Return an object "Segue" that contain all info about new Panel.
-     * @param segue
-     */
-    @Deprecated
-    public abstract void prepare(Segue segue);
-    
-    /**
-     * Initiates the new panel with the specified panel class from the current panel controller's 
-     * @param panelName PanelController
-     */
-    @Deprecated
-    public void startPanel(Class<? extends PanelController> panelName){
-        LOG.log(java.util.logging.Level.INFO, "Switch current panel with: {0}", panelName.getName());
-        NavigationController.getInstance().performPanelNavigationTo(panelName);
-    }
-       
+      
        
     @Override
     public JPanel getPanel() {

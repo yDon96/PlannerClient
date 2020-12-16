@@ -5,7 +5,6 @@
  */
 package CAAYcyclic.PlannerClient.controller.bar;
 
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.bar.BackSideBarPanel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -13,7 +12,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class BackBarController extends BarController {
 
@@ -47,11 +46,7 @@ public class BackBarController extends BarController {
     };
     
     private void backAction() {
-      //  if(!isLockNavigation()){
-            getCoordinator().popBack();
-//        } else {
-//            LOG.log(java.util.logging.Level.WARNING, "Cannot popBack, navigation is locked.");
-//        }
+             getCoordinator().popBack();
     }
 
     @Override
@@ -59,7 +54,4 @@ public class BackBarController extends BarController {
         return LOG;
     }
 
-    @Override
-    public void prepare(Segue segue) {
-    }
 }

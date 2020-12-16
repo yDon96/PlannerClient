@@ -12,8 +12,6 @@ import CAAYcyclic.PlannerClient.builder.AlertDialog.impl.AlertDialogBuilder;
 import CAAYcyclic.PlannerClient.model.Parcel;
 import CAAYcyclic.PlannerClient.model.Procedure;
 import CAAYcyclic.PlannerClient.model.ProceduresList;
-import CAAYcyclic.PlannerClient.navigation.NavigationController;
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.component.RoundedJTextArea;
 import CAAYcyclic.PlannerClient.view.panel.component.ToggleSwitch;
 import CAAYcyclic.PlannerClient.view.panel.content.ActivityFormPanel;
@@ -27,39 +25,37 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  *
- * @author User
+ * @author Amos
  */
 public class ActivityAddFormPanelController extends ContentPanelController{
     
       private static final Logger LOG = Logger.getLogger(ActivityAddFormPanelController.class.getName());
       private ActivityFormPanel activityForm;
       
-      RoundedJTextArea descriptionTextArea;
-      ToggleSwitch interrToggleBtn;
-      JLabel ETAValueLabel;	    
-      JLabel  WeekValueLabel;	
-      JTextField idMaintField;	
-      JButton saveButton;
-      JComboBox procComboBox;
+      private RoundedJTextArea descriptionTextArea;
+      private ToggleSwitch interrToggleBtn;
+      private JLabel ETAValueLabel;	    
+      private JLabel  WeekValueLabel;		
+      private JButton saveButton;
+      private JComboBox procComboBox;
       
-      ProceduresList proceduresParcel;
-      List<Procedure> procedures;
-      
+      private ProceduresList proceduresParcel;
+      private List<Procedure> procedures;
       
       
-      public ActivityAddFormPanelController() {
+      
+    public ActivityAddFormPanelController() {
         super();
         setContentPanel(ActivityFormPanel.class);
         initComponent();
-    }
-      
-     @Override
-    public void panelDidAppear() {
-        super.panelDidAppear();
+    }     
+       
+    @Override
+    public void panelWillAppear() {
+        super.panelWillAppear();
          if(getParcels() != null){ 
              
             proceduresParcel = new ProceduresList();
@@ -83,13 +79,6 @@ public class ActivityAddFormPanelController extends ContentPanelController{
              procComboBox.setEnabled(false);
              
          }
-       
-        
-    }
-    
-    @Override
-    public void panelWillAppear() {
-        super.panelWillAppear();
          
         
     }
@@ -102,17 +91,13 @@ public class ActivityAddFormPanelController extends ContentPanelController{
         interrToggleBtn = activityForm.getInterrToggleBtn();
         ETAValueLabel = activityForm.getETAValueLabel();	    
         WeekValueLabel = activityForm.getWeekValueLabel();	
-        idMaintField = activityForm.getIdMaintField();	
         saveButton = activityForm.getSaveButton();        
         procComboBox = activityForm.getProcComboBox();
         procComboBox.addItem("None");
         
-        procedures = new ArrayList<Procedure>();
-        
-        
-        setButtonAction();
-        
+        procedures = new ArrayList<>();
 
+        setButtonAction();
     }
     
     private void setButtonAction() {
@@ -129,41 +114,31 @@ public class ActivityAddFormPanelController extends ContentPanelController{
     };
     
     private Activity generateActivity() {
-        
-        if(idMaintField.getText().isBlank()|| !idMaintField.getText().matches("-?[0-9]+")){
-            showError("Wrong Maintainer Id");
-            return null;
-        }
-        
-                
-        Activity activity = new Activity();
-        
+               
+        Activity activity = new Activity();       
         
         activity.setDescription(descriptionTextArea.getText());
         activity.setInterruptable(interrToggleBtn.isActivated());
         activity.setWeek(Integer.parseInt(WeekValueLabel.getText()));
         activity.setEstimatedTime(Integer.parseInt(ETAValueLabel.getText()));      
-        activity.setMaintainerId(Integer.parseInt(idMaintField.getText())); 
+
         
         if(procComboBox.getSelectedIndex()!=0)
             activity.setProcedureId((procedures.get(procComboBox.getSelectedIndex()-1)
                 .getId()));
         
-        
-        
         return activity;
     }
     
-        private void startSavingActivity() {
+    private void startSavingActivity() {
         Activity activity = generateActivity();
         if(activity != null){
             activityForm.setSavingText();
-//            NavigationController.getInstance().lockNavigation();
             ApiManager.getIstance().createActivity(activity, apiDelegate);
         }
     }
         
-        private void endSavingActivity() {
+    private void endSavingActivity() {
       //  NavigationController.getInstance().unlockNavigation();
         activityForm.setSaveText();
     }
@@ -210,14 +185,6 @@ public class ActivityAddFormPanelController extends ContentPanelController{
         
     }
     
-
-    @Override
-    public void prepare(Segue segue) {
-        if(segue != null){
-            ActivitiesPanelController activitiesPanelController = (ActivitiesPanelController) segue.getSeguePanelController();
-        }
-    }
-
     @Override
     public Logger getLogger() {
        return LOG;

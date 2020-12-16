@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public abstract class BarController extends PanelController implements IBarController  {
     
@@ -19,13 +19,13 @@ public abstract class BarController extends PanelController implements IBarContr
         super();
     }
     
+    @Override
     public void setBarPanel(Class<? extends JPanel> panelName){
         LOG.log(java.util.logging.Level.INFO, "Set panel: {0}", panelName.getClass().getName());
         try{
             this.setPanel((JPanel) panelName.newInstance());
         } catch (IllegalAccessException | InstantiationException exception){
             LOG.log(java.util.logging.Level.WARNING, "Cannot instancete the panel.");
-            return;
         }
       
     }

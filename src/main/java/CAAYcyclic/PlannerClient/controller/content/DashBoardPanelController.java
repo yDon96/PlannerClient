@@ -5,15 +5,13 @@
  */
 package CAAYcyclic.PlannerClient.controller.content;
 
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import CAAYcyclic.PlannerClient.view.panel.content.DashBoardPanel;
 import java.util.logging.Logger;
 
-import javax.swing.*;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class DashBoardPanelController extends ContentPanelController {
 
@@ -33,10 +31,5 @@ public class DashBoardPanelController extends ContentPanelController {
     public Logger getLogger() {
         return LOG;
     }
-
-    @Override
-    public void prepare(Segue segue) {
-    }
-
     
 }

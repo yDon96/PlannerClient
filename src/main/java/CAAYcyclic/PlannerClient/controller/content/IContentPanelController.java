@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public interface IContentPanelController {
     

@@ -5,21 +5,16 @@
  */
 package CAAYcyclic.PlannerClient.controller.bar;
 
-import CAAYcyclic.PlannerClient.controller.content.DashBoardPanelController;
 import CAAYcyclic.PlannerClient.view.panel.bar.MainSideBarPanel;
 
 import javax.swing.*;
 import java.awt.event.*;
-import CAAYcyclic.PlannerClient.controller.bar.IBarController;
-import CAAYcyclic.PlannerClient.controller.content.ActivitiesPanelController;
-import CAAYcyclic.PlannerClient.controller.content.ContentPanelController;
-import CAAYcyclic.PlannerClient.navigation.Segue;
 import java.util.logging.Logger;
 
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public class MainSideBarController extends BarController {
 
@@ -30,7 +25,7 @@ public class MainSideBarController extends BarController {
     
     private JButton dashBtn;
     private JButton activitiesBtn;
-    private JButton userBtn;
+    private JButton maintBtn;
 
 
     public MainSideBarController() {
@@ -44,11 +39,9 @@ public class MainSideBarController extends BarController {
         this.mainSideBarView = (MainSideBarPanel) getPanel();
         dashBtn = mainSideBarView.getDashBtn();
         activitiesBtn = mainSideBarView.getActivitiesBtn();
-        userBtn = mainSideBarView.getMaintBtn();
+        maintBtn = mainSideBarView.getMaintBtn();
         dashBtn.addMouseListener(dashBtnAction);
         activitiesBtn.addMouseListener(activitiesBtnAction);
-        userBtn.addMouseListener(maintBtnAction);
-        
     }
     
 
@@ -86,6 +79,9 @@ public class MainSideBarController extends BarController {
         public void mousePressed(MouseEvent mouseEvent) {
             super.mousePressed(mouseEvent);
             LOG.log(java.util.logging.Level.INFO, "MaintainerButton selected.");
+            swichAction(maintBtn);
+               getCoordinator().switchPanelToMaintPanel();
+
         }
     };
     
@@ -103,8 +99,4 @@ public class MainSideBarController extends BarController {
         return LOG;
     }
 
-    @Override
-    public void prepare(Segue segue) {
-        
-    }
 }

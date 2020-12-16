@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Youssef
+ * @author Amos
  */
 public abstract class ContentPanelController extends PanelController implements IContentPanelController {
 
