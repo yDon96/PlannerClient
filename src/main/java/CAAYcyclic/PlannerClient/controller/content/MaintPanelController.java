@@ -160,7 +160,7 @@ public class MaintPanelController  extends ContentPanelController{
              ApiManager.getIstance().getMaintainersAvailability(apiDelegateAv,
                 weekComboBox.getSelectedIndex()+1,
                 dayComboBox.getSelectedIndex()+1,
-                maintainers.get(actualIndex-1).getUser_id());
+                maintainers.get(actualIndex-1).getUserId());
                     
                 
         }
@@ -173,7 +173,7 @@ public class MaintPanelController  extends ContentPanelController{
          
             actualIndex = maintainers.size();     
             ApiManager.getIstance().getNumberOfSkill(apiDelegateSkill,
-                maintainers.get(actualIndex-1).getUser_id(), activityToAssign.getProcedureId());
+                maintainers.get(actualIndex-1).getUserId(), activityToAssign.getProcedureId());
     }
         
     }
@@ -202,7 +202,7 @@ public class MaintPanelController  extends ContentPanelController{
                
                setMaintainers((ArrayList<User>) users);          
                 for (User main : maintainers){
-                    Object[] row = {main.getUser_id()};
+                    Object[] row = {main.getUserId()};
                     model.addRow(row);
                 }
                 loadAvailability();
@@ -240,7 +240,7 @@ public class MaintPanelController  extends ContentPanelController{
                 ApiManager.getIstance().getMaintainersAvailability(apiDelegateAv,
                 weekComboBox.getSelectedIndex()+1,
                 dayComboBox.getSelectedIndex()+1,
-                maintainers.get(actualIndex-1).getUser_id());
+                maintainers.get(actualIndex-1).getUserId());
                }
                else
                    loadNumberSkills();
@@ -279,7 +279,7 @@ public class MaintPanelController  extends ContentPanelController{
             if(actualIndex > 1){               
                 actualIndex--;     
                 ApiManager.getIstance().getNumberOfSkill(apiDelegateSkill,
-                maintainers.get(actualIndex-1).getUser_id(), activityToAssign.getProcedureId());
+                maintainers.get(actualIndex-1).getUserId(), activityToAssign.getProcedureId());
                }            
         }
 

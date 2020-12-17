@@ -15,15 +15,15 @@ import java.util.Set;
  */
 public class User implements Parcelable{
     
-    private Integer user_id;
+    private Integer userId;
     private String name;
     private String surname;
     private LocalDate dob;
     private String role;
     private Set<String> competencies;
 
-    public Integer getUser_id() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
     public String getName() {
@@ -55,8 +55,8 @@ public class User implements Parcelable{
         return role;
     }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public void setName(String name) {
@@ -79,7 +79,7 @@ public class User implements Parcelable{
     @Override
     public Parcel convertToParcel() {
         Parcel parcel = new Parcel();
-        parcel.writeInteger(user_id);
+        parcel.writeInteger(userId);
         parcel.writeString(name);
         parcel.writeString(surname);
         parcel.writeString(dob.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -91,7 +91,7 @@ public class User implements Parcelable{
 
     @Override
     public void createFromParcel(Parcel parcel) {
-        this.user_id = parcel.readInteger();
+        this.userId = parcel.readInteger();
         this.name = parcel.readString();
         this.surname = parcel.readString();
         this.dob = LocalDate.parse((parcel.readString()),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
@@ -103,7 +103,7 @@ public class User implements Parcelable{
 
     @Override
     public String toString() {
-        return "User{" + "user_id=" + user_id + ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + dob + ", role=" + role + ", competencies=" + competencies + '}';
+        return "User{" + "user_id=" + userId + ", name=" + name + ", surname=" + surname + ", dateOfBirth=" + dob + ", role=" + role + ", competencies=" + competencies + '}';
     }
     
     
